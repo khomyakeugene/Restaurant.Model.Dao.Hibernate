@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation=
+               "http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:jdbc.properties"/>
+    </bean>
+    <bean class="com.mchange.v2.c3p0.ComboPooledDataSource" id="dataSource">
+        <property name="driverClass" value="${jdbc.driver.class}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="minPoolSize" value="${jdbc.min.connections}"/>
+        <property name="maxPoolSize" value="${jdbc.max.connections}"/>
+        <property name="acquireIncrement" value="${jdc.acquire.increment}"/>
+    </bean>
+
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.jdbc.JdbcJobPositionDao" id="jobPositionDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.jdbc.JdbcEmployeeDao" id="employeeDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.jdbc.JdbcCourseCategoryDao" id="courseCategoryDicDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.jdbc.JdbcCourseDao" id="courseDao">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="courseCategoryDao" ref="courseCategoryDicDao"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.jdbc.JdbcMenuCoursesListDao" id="menuCourseListDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.jdbc.JdbcMenuDao" id="menuDao">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="menuCourseListDao" ref="menuCourseListDao"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.jdbc.JdbcTableDao" id="tableDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.jdbc.JdbcStateGraphDao" id="stateGraphDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.jdbc.JdbcOrderDao" id="orderDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.jdbc.JdbcOrderCourseDao" id="orderCourseDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.jdbc.JdbcCookedCourseDao" id="cookedCourseDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.jdbc.JdbcIngredientDao" id="ingredientDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.jdbc.JdbcPortionDao" id="portionDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.jdbc.JdbcWarehouseDao" id="warehouseDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+</beans>
