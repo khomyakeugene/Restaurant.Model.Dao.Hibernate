@@ -46,9 +46,10 @@ public class HJobPositionDao extends HDaoTableSimpleDic<JobPosition> implements 
         return findObjectByName(name);
     }
 
+    @Transactional
     @Override
     public JobPosition findJobPositionById(int jobPositionId) {
-        return null;
+        return findObjectById(jobPositionId);
     }
 
     @Override
