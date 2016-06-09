@@ -39,7 +39,7 @@ public abstract class RestaurantModelDaoTest {
         tearDownEnvironment();
     }
 
-    @Test(timeout = 2000)
+    @Test//(timeout = 2000)
     public void addFindDelJobPosition() throws Exception {
         String name = Util.getRandomString();
         JobPosition jobPosition = jobPositionDao.addJobPosition(name);
