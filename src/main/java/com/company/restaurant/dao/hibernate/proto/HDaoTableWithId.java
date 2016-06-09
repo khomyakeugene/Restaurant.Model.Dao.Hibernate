@@ -13,7 +13,4 @@ public abstract class HDaoTableWithId<T> extends HDaoTable<T> {
         return findObjectByFieldCondition(nameFieldName, name);
     }
 
-    protected T findObjectById(int id) {
-        return findObjectByFieldCondition(idFieldName, id);
-    }
 }

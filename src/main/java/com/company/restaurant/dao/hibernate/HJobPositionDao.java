@@ -35,8 +35,11 @@ public class HJobPositionDao extends HDaoTableSimpleDic<JobPosition> implements 
         return jobPosition;
     }
 
+    @Transactional
     @Override
     public String delJobPosition(String name) {
+        delete(findJobPositionByName(name));
+
         return null;
     }
 
