@@ -5,8 +5,8 @@ import org.junit.BeforeClass;
 /**
  * Created by Yevhen on 20.05.2016.
  */
-public class RestaurantModelDaoJdbcTest extends RestaurantModelDaoTest {
-    private final static String APPLICATION_CONTEXT_NAME = "restaurant-dao-context.xml";
+public class RestaurantModelDaoHTest extends RestaurantModelDaoTest {
+    private final static String APPLICATION_CONTEXT_NAME = "restaurant-hibernate-context.xml";
 
     @BeforeClass
     public static void setUpClass() throws Exception {
