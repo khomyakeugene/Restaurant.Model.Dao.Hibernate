@@ -1,19 +1,14 @@
 package com.company.restaurant.dao.hibernate;
 
+import com.company.restaurant.dao.proto.DaoTable;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 /**
  * Created by Yevhen on 09.06.2016.
  */
-public abstract class HDaoTable<T> {
+public abstract class HDaoTable<T> extends DaoTable {
     private SessionFactory sessionFactory;
-
-    protected String tableName;
-    protected String viewName;
-    protected String orderByCondition;
-
-    protected abstract void initMetadata();
 
     public HDaoTable() {
         initMetadata();
@@ -23,7 +18,7 @@ public abstract class HDaoTable<T> {
         this.sessionFactory = sessionFactory;
     }
 
-    protected Session getCurrentSeccion() {
+    protected Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
     }
 }

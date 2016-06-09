@@ -21,7 +21,7 @@ public class HJobPositionDao extends HDaoTable implements JobPositionDao {
         JobPosition jobPosition = new JobPosition();
         jobPosition.setName(name);
 
-        getCurrentSeccion().save(jobPosition);
+        getCurrentSession().save(jobPosition);
 
         return jobPosition;
     }
