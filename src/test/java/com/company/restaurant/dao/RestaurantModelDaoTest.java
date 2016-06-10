@@ -18,11 +18,11 @@ public abstract class RestaurantModelDaoTest {
     private final static String DUPLICATE_KEY_VALUE_VIOLATES_MESSAGE = "duplicate key value violates";
 
     private static JobPositionDao jobPositionDao;
-    private static MenuDao menuDao;
     private static EmployeeDao employeeDao;
+    private static CourseCategoryDao courseCategoryDao;
+    private static MenuDao menuDao;
     private static TableDao tableDao;
     private static CourseDao courseDao;
-    private static CourseCategoryDao courseCategoryDao;
     private static CookedCourseDao cookedCourseDao;
     private static OrderDao orderDao;
     private static OrderCourseDao orderCourseDao;
@@ -136,7 +136,8 @@ public abstract class RestaurantModelDaoTest {
 
         jobPositionDao = applicationContext.getBean(JobPositionDao.class);
         menuDao = applicationContext.getBean(MenuDao.class);
-        employeeDao = applicationContext.getBean(employeeDao.getClass());
+        employeeDao = applicationContext.getBean(EmployeeDao.class);
+        courseCategoryDao = applicationContext.getBean(CourseCategoryDao.class);
     }
 
     @BeforeClass
@@ -151,7 +152,7 @@ public abstract class RestaurantModelDaoTest {
         tearDownEnvironment();
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelJobPosition() throws Exception {
         String name = Util.getRandomString();
         JobPosition jobPosition = jobPositionDao.addJobPosition(name);
@@ -172,7 +173,7 @@ public abstract class RestaurantModelDaoTest {
         }
     }
 
-    @Test(timeout = 2000)
+    @Test//(timeout = 2000)
     public void addFindDelEmployeeTest() throws Exception {
         String firstName = Util.getRandomString();
         String secondName = Util.getRandomString();
@@ -202,8 +203,21 @@ public abstract class RestaurantModelDaoTest {
 
         employeeDao.delEmployee(employee);
         assertTrue(employeeDao.findEmployeeById(employeeId) == null);
+    }
+
+    @Test(timeout = 2000)
+    public void addFindDelCourseCategoryTest() throws Exception {
+        String name = Util.getRandomString();
+        CourseCategory courseCategory = courseCategoryDao.addCourseCategory(name);
+
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(courseCategory,
+                courseCategoryDao.findCourseCategoryByName(courseCategory.getName())));
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(courseCategory,
+                courseCategoryDao.findCourseCategoryById(courseCategory.getId())));
+
+        courseCategoryDao.delCourseCategory(name);
+        assertTrue(courseCategoryDao.findCourseCategoryByName(name) == null);
         // Test delete of non-existent data
-        employeeDao.delEmployee(employee);
-        employeeDao.delEmployee(employee.getEmployeeId());
+        courseCategoryDao.delCourseCategory(name);
     }
 }

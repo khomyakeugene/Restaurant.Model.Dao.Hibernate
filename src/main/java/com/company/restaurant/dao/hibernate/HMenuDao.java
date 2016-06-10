@@ -13,11 +13,6 @@ import java.util.List;
  * Created by Yevhen on 10.06.2016.
  */
 public class HMenuDao extends HDaoEntitySimpleDic<Menu> implements MenuDao {
-    @Override
-    protected Menu newObject() {
-        return new Menu();
-    }
-
     @Transactional
     @Override
     public Menu addMenu(String name) {

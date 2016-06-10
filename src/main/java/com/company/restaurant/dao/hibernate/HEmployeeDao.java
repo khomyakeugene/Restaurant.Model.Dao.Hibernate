@@ -11,6 +11,9 @@ import java.util.List;
  * Created by Yevhen on 10.06.2016.
  */
 public class HEmployeeDao extends HDaoEntity<Employee> implements EmployeeDao {
+    private static final String FIRST_NAME_ATTRIBUTE_NAME = "firstName";
+    private static final String SECOND_NAME_ATTRIBUTE_NAME = "secondName";
+
     @Override
     protected void initMetadata() {
 
@@ -43,19 +46,32 @@ public class HEmployeeDao extends HDaoEntity<Employee> implements EmployeeDao {
     @Transactional
     @Override
     public List<Employee> findEmployeeByFirstName(String firstName) {
-        return null;
+        return findObjectsByAttributeValue(FIRST_NAME_ATTRIBUTE_NAME, firstName);
     }
 
     @Transactional
     @Override
-    public List<Employee> findEmployeeBySecondName(String lastName) {
-        return null;
+    public List<Employee> findEmployeeBySecondName(String secondName) {
+        return findObjectsByAttributeValue(SECOND_NAME_ATTRIBUTE_NAME, secondName);
     }
 
     @Transactional
     @Override
     public List<Employee> findEmployeeByFirstAndSecondName(String firstName, String secondName) {
-        return null;
+        List<Employee> result;
+
+        if (firstName != null && !firstName.isEmpty() && secondName != null && !secondName.isEmpty()) {
+            result = findObjectsByTwoAttributeValues(FIRST_NAME_ATTRIBUTE_NAME, firstName,
+                    SECOND_NAME_ATTRIBUTE_NAME, secondName);
+        } else if (firstName != null && !firstName.isEmpty()) {
+            result = findEmployeeByFirstName(firstName);
+        } else if (secondName != null && !secondName.isEmpty()) {
+            result = findEmployeeBySecondName(secondName);
+        } else {
+            result = findAllEmployees();
+        }
+
+        return result;
     }
 
     @Transactional
