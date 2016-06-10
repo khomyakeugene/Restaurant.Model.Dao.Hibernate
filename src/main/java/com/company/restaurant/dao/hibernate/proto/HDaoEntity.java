@@ -1,7 +1,6 @@
 package com.company.restaurant.dao.hibernate.proto;
 
 import com.company.restaurant.dao.proto.SqlExpressions;
-import com.company.restaurant.model.JobPosition;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
