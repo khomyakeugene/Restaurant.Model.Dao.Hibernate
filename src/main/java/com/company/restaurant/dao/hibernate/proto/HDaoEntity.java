@@ -50,9 +50,17 @@ public abstract class HDaoEntity<T> {
         return getGenericName();
     }
 
+    protected String getOrderByCondition(String attributeName) {
+        if (orderByCondition == null) {
+            orderByCondition = String.format(DEFAULT_ORDER_BY_CONDITION_PATTERN, attributeName);
+        }
+
+        return orderByCondition;
+    }
+
     protected String getDefaultOrderByCondition() {
         if (orderByCondition == null) {
-            orderByCondition = String.format(DEFAULT_ORDER_BY_CONDITION_PATTERN, getEntityIdAttributeName());
+            orderByCondition = getOrderByCondition(getEntityIdAttributeName());
         }
 
         return orderByCondition;
