@@ -25,6 +25,8 @@
         <property name="mappingResources">
             <list>
                 <value>orm/JobPosition.hbm.xml</value>
+                <value>orm/Menu.hbm.xml</value>
+                <value>orm/Employee.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -39,6 +41,14 @@
     </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HJobPositionDao" id="jobPositionDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.hibernate.HMenuDao" id="menuDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.hibernate.HEmployeeDao" id="employeeDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 </beans>

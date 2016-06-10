@@ -11,21 +11,21 @@ import java.util.List;
  * Created by Yevhen on 09.06.2016.
  */
 public class HJobPositionDao extends HDaoEntitySimpleDic<JobPosition> implements JobPositionDao {
+    @Override
+    protected JobPosition newObject() {
+        return new JobPosition();
+    }
+
     @Transactional
     @Override
     public JobPosition addJobPosition(String name) {
-        JobPosition jobPosition = new JobPosition();
-        jobPosition.setName(name);
-
-        save(jobPosition);
-
-        return jobPosition;
+        return save(name);
     }
 
     @Transactional
     @Override
     public String delJobPosition(String name) {
-        return delete(findJobPositionByName(name));
+        return delete(name);
     }
 
     @Transactional
