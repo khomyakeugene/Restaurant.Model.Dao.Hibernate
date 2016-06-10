@@ -28,9 +28,7 @@ public abstract class HDaoEntity<T> {
         initMetadata();
     }
 
-    protected void initMetadata() {
-        this.orderByCondition = String.format(DEFAULT_ORDER_BY_CONDITION_PATTERN, getEntityIdAttributeName());
-    }
+    protected abstract void initMetadata();
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -49,8 +47,16 @@ public abstract class HDaoEntity<T> {
         return getGenericClass().getSimpleName();
     }
 
-    private String getEntityName() {
+    protected String getEntityName() {
         return getGenericName();
+    }
+
+    protected String getDefaultOrderByCondition() {
+        if (orderByCondition == null) {
+            orderByCondition = String.format(DEFAULT_ORDER_BY_CONDITION_PATTERN, getEntityIdAttributeName());
+        }
+
+        return orderByCondition;
     }
 
     private EntityType<T> getEntityType() {
@@ -93,7 +99,7 @@ public abstract class HDaoEntity<T> {
 
     protected List<T> findAllObjects() {
         Query<T> query = getCurrentSession().createQuery(SqlExpressions.fromExpression(
-                getEntityName(), orderByCondition), getGenericClass());
+                getEntityName(), getDefaultOrderByCondition()), getGenericClass());
 
         return query.list();
     }
