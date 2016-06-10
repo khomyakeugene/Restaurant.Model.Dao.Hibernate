@@ -173,7 +173,7 @@ public abstract class RestaurantModelDaoTest {
         }
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelEmployeeTest() throws Exception {
         String firstName = Util.getRandomString();
         String secondName = Util.getRandomString();
