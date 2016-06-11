@@ -1,5 +1,6 @@
 package com.company.restaurant.dao.hibernate;
 
+import com.company.restaurant.dao.MenuCourseDao;
 import com.company.restaurant.dao.MenuCoursesViewDao;
 import com.company.restaurant.dao.hibernate.proto.HDaoLinkEntity;
 import com.company.restaurant.model.Course;
@@ -16,6 +17,12 @@ public class HMenuCoursesViewDao extends HDaoLinkEntity<MenuCourseView> implemen
     private static final String MENU_ID_ATTRIBUTE_NAME = "menuId";
     private static final String COURSE_ID_ATTRIBUTE_NAME = "courseId";
 
+    private MenuCourseDao menuCourseDao;
+
+    public void setMenuCourseDao(MenuCourseDao menuCourseDao) {
+        this.menuCourseDao = menuCourseDao;
+    }
+
     @Override
     protected void initMetadata() {
         super.initMetadata();
@@ -27,13 +34,13 @@ public class HMenuCoursesViewDao extends HDaoLinkEntity<MenuCourseView> implemen
     @Transactional
     @Override
     public void addCourseToMenu(Menu menu, Course course) {
-
+        menuCourseDao.addCourseToMenu(menu, course);
     }
 
     @Transactional
     @Override
     public String delCourseFromMenu(Menu menu, Course course) {
-        return null;
+        return menuCourseDao.delCourseFromMenu(menu, course);
     }
 
     @Transactional

@@ -19,8 +19,9 @@ import java.util.Optional;
  * Created by Yevhen on 09.06.2016.
  */
 public abstract class HDaoEntity<T> {
+    private static final String SQL_DELETE_EXPRESSION_PATTERN = "DELETE %s";
+    private static final String SQL_ORDER_BY_CONDITION_PATTERN = "ORDER BY %s";
     private static final String NAME_ATTRIBUTE_NAME = "name";
-    private static final String ORDER_BY_CONDITION_PATTERN = "ORDER BY %s";
 
     private Class<T> entityClass;
     private SessionFactory sessionFactory;
@@ -113,7 +114,7 @@ public abstract class HDaoEntity<T> {
         }
     }
 
-    private Session getCurrentSession() {
+    protected Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
     }
 
@@ -122,7 +123,7 @@ public abstract class HDaoEntity<T> {
     }
 
     protected String getOrderByCondition(String attributeName) {
-        return String.format(ORDER_BY_CONDITION_PATTERN, attributeName);
+        return String.format(SQL_ORDER_BY_CONDITION_PATTERN, attributeName);
     }
 
     private String getDefaultOrderByCondition() {

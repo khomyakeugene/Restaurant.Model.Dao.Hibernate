@@ -176,7 +176,7 @@ public abstract class RestaurantModelDaoTest {
         }
     }
 
-    @Test(timeout = 2000)
+    @Test//(timeout = 2000)
     public void addFindDelMenuTest() throws Exception {
         String name = Util.getRandomString();
         Menu menu = menuDao.addMenu(name);
