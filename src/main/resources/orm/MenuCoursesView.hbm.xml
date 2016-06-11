@@ -4,9 +4,9 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.company.restaurant.model.MenuCourseList" table="v_menu_courses_list" schema="public"
+    <class name="com.company.restaurant.model.MenuCourseView" table="v_menu_courses_list" schema="public"
            catalog="restaurant">
-        <composite-id class="com.company.restaurant.model.MenuCourseList">
+        <composite-id class="com.company.restaurant.model.MenuCourseView">
             <key-property name="menuId" column="menu_id" />
             <key-property name="courseId" column="course_id"/>
         </composite-id>

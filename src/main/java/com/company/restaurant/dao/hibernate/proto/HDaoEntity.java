@@ -1,7 +1,6 @@
 package com.company.restaurant.dao.hibernate.proto;
 
 import com.company.restaurant.dao.proto.SqlExpressions;
-import com.company.util.Util;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.TransientObjectException;
@@ -37,6 +36,10 @@ public abstract class HDaoEntity<T> {
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    public T getFirstFromList(List<T> objects) {
+        return  (objects != null && objects.size() > 0) ? objects.get(0) : null;
     }
 
     private Class<T> getGenericClass() {
@@ -203,7 +206,7 @@ public abstract class HDaoEntity<T> {
 
 
     protected T findObjectByAttributeValue(String attributeName, Object value) {
-        return Util.getFirstFromList(findObjectsByAttributeValue(attributeName, value));
+        return getFirstFromList(findObjectsByAttributeValue(attributeName, value));
     }
 
     protected T findObjectById(int id) {
@@ -231,6 +234,6 @@ public abstract class HDaoEntity<T> {
                                                Object value1,
                                                String attributeName2,
                                                Object value2) {
-        return Util.getFirstFromList(findObjectsByTwoAttributeValues(attributeName1, value1, attributeName2, value2));
+        return getFirstFromList(findObjectsByTwoAttributeValues(attributeName1, value1, attributeName2, value2));
     }
 }

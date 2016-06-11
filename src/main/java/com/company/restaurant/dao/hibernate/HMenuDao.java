@@ -4,7 +4,7 @@ import com.company.restaurant.dao.MenuDao;
 import com.company.restaurant.dao.hibernate.proto.HDaoEntitySimpleDic;
 import com.company.restaurant.model.Course;
 import com.company.restaurant.model.Menu;
-import com.company.restaurant.model.MenuCourseList;
+import com.company.restaurant.model.MenuCourseView;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -63,13 +63,13 @@ public class HMenuDao extends HDaoEntitySimpleDic<Menu> implements MenuDao {
 
     @Transactional
     @Override
-    public List<MenuCourseList> findMenuCourses(Menu menu) {
+    public List<MenuCourseView> findMenuCourses(Menu menu) {
         return null;
     }
 
     @Transactional
     @Override
-    public MenuCourseList findMenuCourseByCourseId(Menu menu, int courseId) {
+    public MenuCourseView findMenuCourseByCourseId(Menu menu, int courseId) {
         return null;
     }
 }
