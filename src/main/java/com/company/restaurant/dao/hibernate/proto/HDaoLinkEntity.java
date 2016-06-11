@@ -12,9 +12,16 @@ public abstract class HDaoLinkEntity<T extends LinkObject> extends HDaoEntity<T>
     private static final String SECOND_ID_ATTRIBUTE_NAME = "secondId";
     private static final String LINK_DATA_ATTRIBUTE_NAME = "linkData";
 
-    protected String firstIdAttributeName = FIRST_ID_ATTRIBUTE_NAME;
-    protected String secondIdAttributeName = SECOND_ID_ATTRIBUTE_NAME;
-    protected String LinkDataAttributeNameName = LINK_DATA_ATTRIBUTE_NAME;
+    protected String firstIdAttributeName;
+    protected String secondIdAttributeName;
+    protected String LinkDataAttributeNameName;
+
+    @Override
+    protected void initMetadata() {
+        firstIdAttributeName = FIRST_ID_ATTRIBUTE_NAME;
+        secondIdAttributeName = SECOND_ID_ATTRIBUTE_NAME;
+        LinkDataAttributeNameName = LINK_DATA_ATTRIBUTE_NAME;
+    }
 
     protected T newObject(int firstId, int secondId, String linkData) {
         T object = newObject();
@@ -41,10 +48,14 @@ public abstract class HDaoLinkEntity<T extends LinkObject> extends HDaoEntity<T>
         return delete(object);
     }
 
+    protected T findObjectByTwoAttributeValues(int firstId, int secondId) {
+        return findObjectByTwoAttributeValues(firstIdAttributeName, firstId, secondIdAttributeName, secondId);
+    }
+
     protected String selectLinkData(int firstId, int secondId) {
         String result = null;
 
-        T object = findObjectByTwoAttributeValues(firstIdAttributeName, firstId, secondIdAttributeName, secondId);
+        T object = findObjectByTwoAttributeValues(firstId, secondId);
         if (object != null) {
             try {
                 Field linkDataField = object.getClass().getDeclaredField(LinkDataAttributeNameName);

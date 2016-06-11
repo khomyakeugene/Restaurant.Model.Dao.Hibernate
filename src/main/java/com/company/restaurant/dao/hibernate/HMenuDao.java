@@ -1,5 +1,6 @@
 package com.company.restaurant.dao.hibernate;
 
+import com.company.restaurant.dao.MenuCoursesViewDao;
 import com.company.restaurant.dao.MenuDao;
 import com.company.restaurant.dao.hibernate.proto.HDaoEntitySimpleDic;
 import com.company.restaurant.model.Course;
@@ -13,6 +14,12 @@ import java.util.List;
  * Created by Yevhen on 10.06.2016.
  */
 public class HMenuDao extends HDaoEntitySimpleDic<Menu> implements MenuDao {
+    private MenuCoursesViewDao menuCoursesViewDao;
+
+    public void setMenuCoursesViewDao(MenuCoursesViewDao menuCoursesViewDao) {
+        this.menuCoursesViewDao = menuCoursesViewDao;
+    }
+
     @Transactional
     @Override
     public Menu addMenu(String name) {
@@ -52,24 +59,24 @@ public class HMenuDao extends HDaoEntitySimpleDic<Menu> implements MenuDao {
     @Transactional
     @Override
     public void addCourseToMenu(Menu menu, Course course) {
-
+        menuCoursesViewDao.addCourseToMenu(menu, course);
     }
 
     @Transactional
     @Override
     public void delCourseFromMenu(Menu menu, Course course) {
-
+        menuCoursesViewDao.delCourseFromMenu(menu, course);
     }
 
     @Transactional
     @Override
     public List<MenuCourseView> findMenuCourses(Menu menu) {
-        return null;
+        return menuCoursesViewDao.findMenuCourses(menu);
     }
 
     @Transactional
     @Override
     public MenuCourseView findMenuCourseByCourseId(Menu menu, int courseId) {
-        return null;
+        return menuCoursesViewDao.findMenuCourseByCourseId(menu, courseId);
     }
 }
