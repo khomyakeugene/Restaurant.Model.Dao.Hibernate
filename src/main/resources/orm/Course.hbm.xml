@@ -7,6 +7,7 @@
     <class name="com.company.restaurant.model.Course" table="course" schema="public" catalog="restaurant">
         <id name="courseId">
             <column name="course_id" sql-type="integer"/>
+            <generator class="identity"/>
         </id>
         <property name="categoryId">
             <column name="course_category_id" sql-type="integer"/>

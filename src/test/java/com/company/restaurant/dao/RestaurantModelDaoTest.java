@@ -175,4 +175,55 @@ public abstract class RestaurantModelDaoTest {
             System.out.println("Course: id: " + course1.getCourseId() + ", name: " + course1.getName());
         }
     }
+
+    @Test(timeout = 2000)
+    public void addFindDelMenuTest() throws Exception {
+        String name = Util.getRandomString();
+        Menu menu = menuDao.addMenu(name);
+
+        Menu menuByName = menuDao.findMenuByName(name);
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(menu, menuByName));
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(menu,
+                menuDao.findMenuById(menu.getId())));
+
+        // Courses in menu ----------------------------
+        String courseName1 = Util.getRandomString();
+        Course course1 = new Course();
+        course1.setCategoryId(courseCategoryId());
+        course1.setName(courseName1);
+        course1.setWeight(Util.getRandomFloat());
+        course1.setCost(Util.getRandomFloat());
+        course1 = courseDao.addCourse(course1);
+
+        String courseName2 = Util.getRandomString();
+        Course course2 = new Course();
+        course2.setCategoryId(courseCategoryId());
+        course2.setName(courseName2);
+        course2.setWeight(Util.getRandomFloat());
+        course2.setCost(Util.getRandomFloat());
+        course2 = courseDao.addCourse(course2);
+
+        menuDao.addCourseToMenu(menu, course1);
+        menuDao.addCourseToMenu(menu, course2);
+
+        for (MenuCourseList menuCourseList : menuDao.findMenuCourses(menu)) {
+            menuDao.findMenuCourseByCourseId(menu, menuCourseList.getCourseId());
+            System.out.println(menuCourseList.getCourseName() + ": " + menuCourseList.getCourseCategoryName());
+        }
+
+
+        menuDao.delCourseFromMenu(menu, course1);
+        menuDao.delCourseFromMenu(menu, course2);
+
+        courseDao.delCourse(courseName1);
+        courseDao.delCourse(courseName2);
+        // ----------------------------
+
+        for (Menu m : menuDao.findAllMenus()) {
+            System.out.println("menu_id: " + m.getId() + ", name: " + m.getName());
+        }
+
+        menuDao.delMenu(name);
+        assertTrue(menuDao.findMenuByName(name) == null);
+    }
 }
