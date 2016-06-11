@@ -1,6 +1,7 @@
 package com.company.restaurant.dao.hibernate.proto;
 
 import com.company.restaurant.dao.proto.SqlExpressions;
+import com.company.util.Util;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.TransientObjectException;
@@ -91,9 +92,9 @@ public abstract class HDaoEntity<T> {
                     // got class java.lang.Long" should be generated
                     Type idFieldType = idField.getType();
                     // Check only for primitive types such "int" and "long"
-                    if (((Class)idFieldType).getName().equals(int.class.getName())) {
+                    if (((Class) idFieldType).getName().equals(int.class.getName())) {
                         return (session.get(entityName, idField.getInt(object)) != null);
-                    } else if (((Class)idFieldType).getName().equals(long.class.getName())) {
+                    } else if (((Class) idFieldType).getName().equals(long.class.getName())) {
                         return (session.get(entityName, idField.getLong(object)) != null);
                     }
                     // Intentionally do not check for other possible types
@@ -155,13 +156,19 @@ public abstract class HDaoEntity<T> {
         return object;
     }
 
+    protected T saveOrUpdate(T object) {
+        getCurrentSession().saveOrUpdate(object);
+
+        return object;
+    }
+
     protected String delete(T object) {
         String result = null;
 
         if (object != null) {
             try {
                 getCurrentSession().delete(object);
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 result = e.getMessage();
             }
         }
@@ -196,14 +203,7 @@ public abstract class HDaoEntity<T> {
 
 
     protected T findObjectByAttributeValue(String attributeName, Object value) {
-        T result = null;
-
-        List<T> objects = findObjectsByAttributeValue(attributeName, value);
-        if (objects != null && objects.size() > 0) {
-            result = objects.get(0);
-        }
-
-        return result;
+        return Util.getFirstFromList(findObjectsByAttributeValue(attributeName, value));
     }
 
     protected T findObjectById(int id) {
@@ -225,5 +225,12 @@ public abstract class HDaoEntity<T> {
         query.setParameter(attributeName2, value2);
 
         return query.list();
+    }
+
+    protected T findObjectByTwoAttributeValues(String attributeName1,
+                                               Object value1,
+                                               String attributeName2,
+                                               Object value2) {
+        return Util.getFirstFromList(findObjectsByTwoAttributeValues(attributeName1, value1, attributeName2, value2));
     }
 }

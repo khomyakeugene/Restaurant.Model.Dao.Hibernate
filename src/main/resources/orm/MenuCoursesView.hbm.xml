@@ -6,7 +6,6 @@
 
     <class name="com.company.restaurant.model.MenuCourseList" table="v_menu_courses_list" schema="public"
            catalog="restaurant">
-
         <composite-id class="com.company.restaurant.model.MenuCourseList">
             <key-property name="menuId" column="menu_id" />
             <key-property name="courseId" column="course_id"/>
