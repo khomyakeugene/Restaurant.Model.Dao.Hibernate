@@ -19,12 +19,13 @@ import java.util.Optional;
  * Created by Yevhen on 09.06.2016.
  */
 public abstract class HDaoEntity<T> {
+    private static final String NAME_ATTRIBUTE_NAME = "name";
     private static final String ORDER_BY_CONDITION_PATTERN = "ORDER BY %s";
 
     private Class<T> entityClass;
     private SessionFactory sessionFactory;
 
-    protected String nameAttributeName;
+    protected String nameAttributeName = NAME_ATTRIBUTE_NAME;
     protected String orderByCondition;
 
     public HDaoEntity() {
@@ -171,6 +172,11 @@ public abstract class HDaoEntity<T> {
     protected String delete(int id) {
         return delete(findObjectById(id));
     }
+
+    protected String delete(String name) {
+        return delete(findObjectByName(name));
+    }
+
 
     protected List<T> findAllObjects() {
         Query<T> query = getCurrentSession().createQuery(SqlExpressions.fromExpression(

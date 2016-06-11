@@ -20,23 +20,15 @@ public abstract class RestaurantModelDaoTest {
     private static JobPositionDao jobPositionDao;
     private static EmployeeDao employeeDao;
     private static CourseCategoryDao courseCategoryDao;
+    private static CourseDao courseDao;
     private static MenuDao menuDao;
     private static TableDao tableDao;
-    private static CourseDao courseDao;
     private static CookedCourseDao cookedCourseDao;
     private static OrderDao orderDao;
     private static OrderCourseDao orderCourseDao;
     private static IngredientDao ingredientDao;
     private static PortionDao portionDao;
     private static WarehouseDao warehouseDao;
-
-    private static int closedOrderId;
-    private static Order closedOrder;
-    private static String closedOrderCourseName1;
-    private static Course closedOrderCourse1;
-    private static String closedOrderCourseName2;
-    private static Course closedOrderCourse2;
-    private static Course testCourse;
 
     private static Employee employee() {
         return employeeDao.findAllEmployees().get(0);
@@ -64,73 +56,6 @@ public abstract class RestaurantModelDaoTest {
         return tableList.get(tableList.size()-1).getTableId();
     }
 
-    private static Course prepareTestCourse() {
-        testCourse = new Course();
-        testCourse.setCategoryId(courseCategoryId());
-        testCourse.setName(Util.getRandomString());
-        testCourse.setWeight(Util.getRandomFloat());
-        testCourse.setCost(Util.getRandomFloat());
-
-        testCourse = courseDao.addCourse(testCourse);
-
-        return testCourse;
-    }
-
-    private static void delTestCourse() {
-        courseDao.delCourse(testCourse);
-    }
-
-    private static void prepareClosedOrder() throws Exception {
-        Order order = new Order();
-        order.setTableId(tableId());
-        order.setEmployeeId(employeeId());
-        order.setOrderNumber(Util.getRandomString());
-        order.setStateType("A");
-        closedOrderId = orderDao.addOrder(order).getOrderId();
-
-        // Courses for closed order ----------------------------
-        closedOrderCourseName1 = Util.getRandomString();
-        closedOrderCourse1 = new Course();
-        closedOrderCourse1.setCategoryId(courseCategoryId());
-        closedOrderCourse1.setName(closedOrderCourseName1);
-        closedOrderCourse1.setWeight(Util.getRandomFloat());
-        closedOrderCourse1.setCost(Util.getRandomFloat());
-        closedOrderCourse1 = courseDao.addCourse(closedOrderCourse1);
-
-        closedOrderCourseName2 = Util.getRandomString();
-        closedOrderCourse2 = new Course();
-        closedOrderCourse2.setCategoryId(courseCategoryId());
-        closedOrderCourse2.setName(closedOrderCourseName2);
-        closedOrderCourse2.setWeight(Util.getRandomFloat());
-        closedOrderCourse2.setCost(Util.getRandomFloat());
-        closedOrderCourse2 = courseDao.addCourse(closedOrderCourse2);
-        // ----------
-
-        orderCourseDao.addCourseToOrder(order, closedOrderCourse1, 1);
-
-        closedOrder = orderDao.updOrderState(order, "B");
-    }
-
-    private static void clearClosedOrder() throws Exception {
-        Order order = orderDao.findOrderById(closedOrderId);
-        if (order != null) {
-            // Manually change order state to "open"
-            order = orderDao.updOrderState(order, "A");
-            // Delete "open" order
-            orderDao.delOrder(order);
-        }
-
-        // Delete course for closed order
-        courseDao.delCourse(closedOrderCourseName1);
-        courseDao.delCourse(closedOrderCourseName2);
-    }
-
-    public static void initEnvironment() throws Exception {
-    }
-
-    private static void tearDownEnvironment() throws Exception {
-    }
-
     protected static void initDataSource(String configLocation) throws Exception {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(configLocation);
 
@@ -138,18 +63,16 @@ public abstract class RestaurantModelDaoTest {
         menuDao = applicationContext.getBean(MenuDao.class);
         employeeDao = applicationContext.getBean(EmployeeDao.class);
         courseCategoryDao = applicationContext.getBean(CourseCategoryDao.class);
+        courseDao = applicationContext.getBean(CourseDao.class);
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
         initDataSource(null); // intentionally, to generate exception if use this code directly
-
-        initEnvironment();
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
-        tearDownEnvironment();
     }
 
     @Test(timeout = 2000)
@@ -219,5 +142,37 @@ public abstract class RestaurantModelDaoTest {
         assertTrue(courseCategoryDao.findCourseCategoryByName(name) == null);
         // Test delete of non-existent data
         courseCategoryDao.delCourseCategory(name);
+    }
+
+    @Test(timeout = 2000)
+    public void addFindDelCourseTest() throws Exception {
+        String name = Util.getRandomString();
+        Course course = new Course();
+        course.setCategoryId(courseCategoryId());
+        course.setName(name);
+        course.setWeight(Util.getRandomFloat());
+        course.setCost(Util.getRandomFloat());
+        course = courseDao.addCourse(course);
+
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course,
+                courseDao.findCourseByName(course.getName())));
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course,
+                courseDao.findCourseById(course.getCourseId())));
+
+        courseDao.delCourse(name);
+        assertTrue(courseDao.findCourseByName(name) == null);
+        // Test delete by "the whole object"
+        course = courseDao.addCourse(course);
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(course,
+                courseDao.findCourseByName(name)));
+        courseDao.delCourse(course);
+        assertTrue(courseDao.findCourseByName(name) == null);
+        // Test delete of non-existent data
+        courseDao.delCourse(name);
+
+        // Whole course list
+        for (Course course1 : courseDao.findAllCourses()) {
+            System.out.println("Course: id: " + course1.getCourseId() + ", name: " + course1.getName());
+        }
     }
 }
