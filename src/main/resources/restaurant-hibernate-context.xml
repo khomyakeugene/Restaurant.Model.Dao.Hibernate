@@ -29,6 +29,7 @@
                 <value>orm/Employee.hbm.xml</value>
                 <value>orm/CourseCategory.hbm.xml</value>
                 <value>orm/Course.hbm.xml</value>
+                <value>orm/MenuCoursesList.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
