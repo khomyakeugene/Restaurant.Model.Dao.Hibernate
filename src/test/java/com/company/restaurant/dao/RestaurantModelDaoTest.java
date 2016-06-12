@@ -60,10 +60,11 @@ public abstract class RestaurantModelDaoTest {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(configLocation);
 
         jobPositionDao = applicationContext.getBean(JobPositionDao.class);
-        menuDao = applicationContext.getBean(MenuDao.class);
         employeeDao = applicationContext.getBean(EmployeeDao.class);
         courseCategoryDao = applicationContext.getBean(CourseCategoryDao.class);
         courseDao = applicationContext.getBean(CourseDao.class);
+        menuDao = applicationContext.getBean(MenuDao.class);
+        tableDao = applicationContext.getBean(TableDao.class);
     }
 
     @BeforeClass
@@ -176,7 +177,7 @@ public abstract class RestaurantModelDaoTest {
         }
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelMenuTest() throws Exception {
         String name = Util.getRandomString();
         Menu menu = menuDao.addMenu(name);
@@ -224,5 +225,39 @@ public abstract class RestaurantModelDaoTest {
 
         menuDao.delMenu(name);
         assertTrue(menuDao.findMenuByName(name) == null);
+    }
+
+    @Test(timeout = 2000)
+    public void addFindDelTableTest() throws Exception {
+        Table table = new Table();
+        table.setDescription(Util.getRandomString());
+        boolean tableWasNotAdded = true;
+        do {
+            try {
+                table.setNumber(tableDao.findTableById(lastTableId()).getNumber() + Util.getRandomInteger());
+                table = tableDao.addTable(table);
+                tableWasNotAdded = false;
+            } catch (RuntimeException e) {
+                //  Error "duplicate key value violates unique constraint "ak_u_table_number_table"" could be generated
+                if (!e.getMessage().contains(DUPLICATE_KEY_VALUE_VIOLATES_MESSAGE)) {
+                    throw new RuntimeException(e);
+
+                }
+            }
+        } while (tableWasNotAdded);
+
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(table,
+                tableDao.findTableByNumber(table.getNumber())));
+        assertTrue(ObjectService.isEqualByGetterValuesStringRepresentation(table,
+                tableDao.findTableById(table.getTableId())));
+
+        // Whole table list
+        for (Table table1 : tableDao.findAllTables()) {
+            System.out.println("Table: id: " + table1.getId() + ", name: " + table1.getName() +
+                    ", number: " + table1.getNumber());
+        }
+
+        tableDao.delTable(table);
+        assertTrue(tableDao.findTableByNumber(table.getNumber()) == null);
     }
 }
