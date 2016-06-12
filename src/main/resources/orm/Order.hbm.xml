@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.company.restaurant.model.Order" table="order" schema="public" catalog="restaurant">
+        <id name="orderId">
+            <column name="order_id" sql-type="integer"/>
+            <generator class="identity"/>
+        </id>
+        <property name="tableId">
+            <column name="table_id" sql-type="integer"/>
+        </property>
+        <property name="stateType">
+            <column name="state_type" sql-type="char"/>
+        </property>
+        <property name="employeeId">
+            <column name="employee_id" sql-type="integer"/>
+        </property>
+        <property name="orderNumber">
+            <column name="order_number" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="orderDatetime">
+            <column name="order_datetime" sql-type="timestamp"/>
+        </property>
+    </class>
+</hibernate-mapping>

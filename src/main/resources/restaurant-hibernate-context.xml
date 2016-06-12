@@ -30,6 +30,7 @@
                 <value>orm/MenuCourse.hbm.xml</value>
                 <value>orm/MenuCoursesView.hbm.xml</value>
                 <value>orm/Table.hbm.xml</value>
+                <value>orm/Order.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -77,5 +78,14 @@
 
     <bean class="com.company.restaurant.dao.hibernate.HTableDao" id="tableDao">
         <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.hibernate.HOrderDao" id="orderDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.hibernate.HOrderViewDao" id="orderViewDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="orderDao" ref="orderDao"/>
     </bean>
 </beans>
