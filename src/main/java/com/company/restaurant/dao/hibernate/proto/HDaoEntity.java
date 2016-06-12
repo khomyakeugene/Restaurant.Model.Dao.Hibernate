@@ -188,7 +188,6 @@ public abstract class HDaoEntity<T> {
         return delete(findObjectByName(name));
     }
 
-
     protected List<T> findAllObjects() {
         Query<T> query = getCurrentSession().createQuery(SqlExpressions.fromExpression(
                 getEntityName(), getDefaultOrderByCondition()), getEntityClass());

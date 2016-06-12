@@ -27,7 +27,7 @@ public class HOrderViewDao extends HDaoEntity<OrderView> implements OrderViewDao
     }
     @Override
     public String orderEntityName() {
-        return null;
+        return orderDao.orderEntityName();
     }
 
     @Transactional
