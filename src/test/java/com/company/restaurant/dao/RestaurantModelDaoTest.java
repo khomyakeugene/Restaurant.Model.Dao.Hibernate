@@ -211,7 +211,6 @@ public abstract class RestaurantModelDaoTest {
             System.out.println(menuCourseList.getCourseName() + ": " + menuCourseList.getCourseCategoryName());
         }
 
-
         menuDao.delCourseFromMenu(menu, course1);
         menuDao.delCourseFromMenu(menu, course2);
 

@@ -27,8 +27,8 @@
                 <value>orm/Employee.hbm.xml</value>
                 <value>orm/CourseCategory.hbm.xml</value>
                 <value>orm/Course.hbm.xml</value>
-                <value>orm/MenuCoursesView.hbm.xml</value>
                 <value>orm/MenuCourse.hbm.xml</value>
+                <value>orm/MenuCoursesView.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -59,7 +59,6 @@
 
     <bean class="com.company.restaurant.dao.hibernate.HMenuDao" id="menuDao">
         <property name="sessionFactory" ref="sessionFactory"/>
-        <property name="menuCourseDao" ref="menuCourseDao"/>
         <property name="menuCoursesViewDao" ref="menuCoursesViewDao"/>
     </bean>
 

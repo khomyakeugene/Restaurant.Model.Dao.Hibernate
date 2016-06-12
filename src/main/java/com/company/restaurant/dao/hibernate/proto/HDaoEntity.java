@@ -118,7 +118,7 @@ public abstract class HDaoEntity<T> {
         return sessionFactory.getCurrentSession();
     }
 
-    private String getEntityName() {
+    protected String getEntityName() {
         return getEntityClass().getName();
     }
 
