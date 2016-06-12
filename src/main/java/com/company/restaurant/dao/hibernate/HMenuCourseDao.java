@@ -2,9 +2,11 @@ package com.company.restaurant.dao.hibernate;
 
 import com.company.restaurant.dao.MenuCourseDao;
 import com.company.restaurant.dao.hibernate.proto.HDaoLinkEntity;
+import com.company.restaurant.dao.proto.SqlExpressions;
 import com.company.restaurant.model.Course;
 import com.company.restaurant.model.Menu;
 import com.company.restaurant.model.MenuCourse;
+import org.hibernate.query.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class HMenuCourseDao extends HDaoLinkEntity<MenuCourse> implements MenuCourseDao {
     private static final String MENU_ID_ATTRIBUTE_NAME = "menuId";
     private static final String COURSE_ID_ATTRIBUTE_NAME = "courseId";
+    private static final String COURSE_NUMBER_ATTRIBUTE_NAME = "courseNumber";
 
     @Override
     protected void initMetadata() {
@@ -23,16 +26,13 @@ public class HMenuCourseDao extends HDaoLinkEntity<MenuCourse> implements MenuCo
     }
 
     private int getMaxCourseNumberInMenu(Menu menu) {
-        /*
-        String selectResult = find
-                getOneFieldByFieldCondition(
-                maxFieldValueExpression(COURSE_NUMBER_FIELD_NAME),
-                firstIdFieldName, menu.getId());
+        Query<Integer> query = getCurrentSession().createQuery(SqlExpressions.selectExpression(
+                SqlExpressions.maxFieldValueExpression(COURSE_NUMBER_ATTRIBUTE_NAME)) +
+                SqlExpressions.fromExpression(getEntityName(), SqlExpressions.whereExpression(
+                        SqlExpressions.equalityCondition(MENU_ID_ATTRIBUTE_NAME, menu.getId())), null), Integer.class);
+        Integer result = query.uniqueResult();
 
-        return (selectResult == null) || selectResult.equals("") ? 0 : Integer.parseInt(selectResult);
-        */
-
-        return 0;
+        return (result == null) ? 0 : result;
     }
 
     @Transactional
