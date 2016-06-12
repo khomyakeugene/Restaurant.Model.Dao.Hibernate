@@ -24,7 +24,7 @@ public abstract class RestaurantModelDaoTest {
     private static MenuDao menuDao;
     private static TableDao tableDao;
     private static CookedCourseDao cookedCourseDao;
-    private static OrderDao orderDao;
+    private static OrderViewDao orderViewDao;
     private static OrderCourseDao orderCourseDao;
     private static IngredientDao ingredientDao;
     private static PortionDao portionDao;
@@ -65,6 +65,7 @@ public abstract class RestaurantModelDaoTest {
         courseDao = applicationContext.getBean(CourseDao.class);
         menuDao = applicationContext.getBean(MenuDao.class);
         tableDao = applicationContext.getBean(TableDao.class);
+        orderViewDao = applicationContext.getBean(OrderViewDao.class);
     }
 
     @BeforeClass

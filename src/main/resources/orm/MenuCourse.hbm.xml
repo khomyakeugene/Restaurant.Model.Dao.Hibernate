@@ -5,7 +5,7 @@
 <hibernate-mapping>
 
     <class name="com.company.restaurant.model.MenuCourse" table="menu_courses_list" schema="public"
-           catalog="restaurant">
+           catalog="restaurant" >
         <composite-id>
             <key-property name="menuId">
                 <column name="menu_id" sql-type="integer"/>
