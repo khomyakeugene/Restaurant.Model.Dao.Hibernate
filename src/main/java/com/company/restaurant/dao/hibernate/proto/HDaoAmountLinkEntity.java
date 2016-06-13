@@ -13,16 +13,20 @@ public abstract class HDaoAmountLinkEntity<T extends LinkObject> extends HDaoLin
         return (linkData  == null) ? null : Float.parseFloat(linkData);
     }
 
+    protected String amountToString(float amount) {
+        return String.valueOf(amount);
+    }
+
     protected void increaseAmount(int firstId, int secondId, float increasePortion) {
         Float currentAmount = selectCurrentAmount(firstId, secondId);
         if (currentAmount == null) {
             if (increasePortion > 0) {
-                save(firstId, secondId, String.valueOf(increasePortion));
+                save(firstId, secondId, amountToString(increasePortion));
             }
         } else {
             currentAmount += increasePortion;
             if (currentAmount > 0) {
-                saveOrUpdate(firstId, secondId, String.valueOf(increasePortion));
+                saveOrUpdate(firstId, secondId, amountToString(increasePortion));
             } else {
                 delete(firstId, secondId);
             }

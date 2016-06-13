@@ -25,7 +25,7 @@ public abstract class RestaurantModelDaoTest {
     private static MenuDao menuDao;
     private static TableDao tableDao;
     private static OrderViewDao orderViewDao;
-    private static OrderCourseDao orderCourseDao;
+    private static OrderCourseViewDao orderCourseViewDao;
     private static CookedCourseDao cookedCourseDao;
     private static IngredientDao ingredientDao;
     private static PortionDao portionDao;
@@ -67,6 +67,7 @@ public abstract class RestaurantModelDaoTest {
         menuDao = applicationContext.getBean(MenuDao.class);
         tableDao = applicationContext.getBean(TableDao.class);
         orderViewDao = applicationContext.getBean(OrderViewDao.class);
+        orderCourseViewDao = applicationContext.getBean(OrderCourseViewDao.class);
     }
 
     @BeforeClass
@@ -179,7 +180,7 @@ public abstract class RestaurantModelDaoTest {
         }
     }
 
-    @Test(timeout = 2000)
+    @Test//(timeout = 2000)
     public void addFindDelMenuTest() throws Exception {
         String name = Util.getRandomString();
         Menu menu = menuDao.addMenu(name);
@@ -263,14 +264,16 @@ public abstract class RestaurantModelDaoTest {
         assertTrue(tableDao.findTableByNumber(table.getNumber()) == null);
     }
 
-    @Test (timeout = 2000)
+
+    @Test //(timeout = 2000)
     public void addFindDelOrderTest() throws Exception {
         OrderView orderView = new OrderView();
         orderView.setTableId(tableId());
         orderView.setEmployeeId(employeeId());
         orderView.setOrderNumber(Util.getRandomString());
         orderView.setStateType("A");
-        int orderId = orderViewDao.addOrder(orderView).getOrderId();
+        orderView = orderViewDao.addOrder(orderView);
+        int orderId = orderView.getOrderId();
 
         // Just check of successful retrieving from database,  without "full comparing"!!!
         // Because, at least field <order_datetime> is filling by default (as a current timestamp) on the database level
@@ -293,17 +296,17 @@ public abstract class RestaurantModelDaoTest {
         course2.setCost(Util.getRandomFloat());
         course2 = courseDao.addCourse(course2);
 
-        orderCourseDao.addCourseToOrder(orderView, course1, 3);
-        orderCourseDao.addCourseToOrder(orderView, course2, 2);
+        orderCourseViewDao.addCourseToOrder(orderView, course1, 3);
+        orderCourseViewDao.addCourseToOrder(orderView, course2, 2);
 
-        for (OrderCourse orderCourse : orderCourseDao.findAllOrderCourses(orderView)) {
-            orderCourseDao.findOrderCourseByCourseId(orderView, orderCourse.getCourseId());
-            System.out.println(orderCourse.getCourseName() + " : " + orderCourse.getCourseCost());
+        for (OrderCourseView orderCourseView : orderCourseViewDao.findAllOrderCourses(orderView)) {
+            orderCourseViewDao.findOrderCourseByCourseId(orderView, orderCourseView.getCourseId());
+            System.out.println(orderCourseView.getCourseName() + " : " + orderCourseView.getCourseCost());
         }
 
-        orderCourseDao.takeCourseFromOrder(orderView, course1, 2);
-        orderCourseDao.takeCourseFromOrder(orderView, course1, 1);
-        orderCourseDao.takeCourseFromOrder(orderView, course2, 2);
+        orderCourseViewDao.takeCourseFromOrder(orderView, course1, 2);
+        orderCourseViewDao.takeCourseFromOrder(orderView, course1, 1);
+        orderCourseViewDao.takeCourseFromOrder(orderView, course2, 2);
 
         courseDao.delCourse(courseName1);
         courseDao.delCourse(courseName2);

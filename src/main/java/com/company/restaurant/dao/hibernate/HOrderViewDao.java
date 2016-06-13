@@ -73,6 +73,9 @@ public class HOrderViewDao extends HDaoEntity<OrderView> implements OrderViewDao
     @Transactional
     @Override
     public OrderView updOrderState(OrderView orderView, String stateType) {
-        return null;
+        Order order = orderDao.updOrderState((Order) ObjectService.copyObjectByAccessors(orderView, new Order()),
+                stateType);
+
+        return findObjectById(order.getOrderId());
     }
 }

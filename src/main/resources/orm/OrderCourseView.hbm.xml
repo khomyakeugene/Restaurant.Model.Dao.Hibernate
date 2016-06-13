@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.company.restaurant.model.OrderCourseView" table="v_order_course" schema="public"
+           catalog="restaurant">
+        <composite-id class="com.company.restaurant.model.OrderCourseView">
+            <key-property name="orderId" column="order_id" />
+            <key-property name="courseId" column="course_id"/>
+        </composite-id>
+
+        <property name="courseQuantity">
+            <column name="course_quantity" sql-type="integer" not-null="true"/>
+        </property>
+        <property name="courseCategoryId">
+            <column name="course_category_id" sql-type="integer" not-null="true"/>
+        </property>
+        <property name="courseName">
+            <column name="course_name" sql-type="varchar(256)" length="256" not-null="true"/>
+        </property>
+        <property name="courseWeight">
+            <column name="course_weight" sql-type="double precision" precision="-1" not-null="true"/>
+        </property>
+        <property name="courseCost">
+            <column name="course_cost" sql-type="double precision" precision="-1" not-null="true"/>
+        </property>
+        <property name="courseCategoryName">
+            <column name="course_category_name" sql-type="varchar(256)" length="256" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

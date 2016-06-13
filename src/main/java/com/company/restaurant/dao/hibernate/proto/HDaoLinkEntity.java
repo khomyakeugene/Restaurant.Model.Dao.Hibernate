@@ -18,13 +18,13 @@ public abstract class HDaoLinkEntity<T extends LinkObject> extends HDaoEntity<T>
 
     protected String firstIdAttributeName;
     protected String secondIdAttributeName;
-    protected String LinkDataAttributeNameName;
+    protected String linkDataAttributeName;
 
     @Override
     protected void initMetadata() {
         firstIdAttributeName = FIRST_ID_ATTRIBUTE_NAME;
         secondIdAttributeName = SECOND_ID_ATTRIBUTE_NAME;
-        LinkDataAttributeNameName = LINK_DATA_ATTRIBUTE_NAME;
+        linkDataAttributeName = LINK_DATA_ATTRIBUTE_NAME;
     }
 
     protected T newObject(int firstId, int secondId, String linkData) {
@@ -80,7 +80,7 @@ public abstract class HDaoLinkEntity<T extends LinkObject> extends HDaoEntity<T>
         T object = findObjectByTwoAttributeValues(firstId, secondId);
         if (object != null) {
             try {
-                Field linkDataField = object.getClass().getDeclaredField(LinkDataAttributeNameName);
+                Field linkDataField = object.getClass().getDeclaredField(linkDataAttributeName);
                 linkDataField.setAccessible(true);
                 result = linkDataField.get(object).toString();
             } catch (NoSuchFieldException | IllegalAccessException e) {

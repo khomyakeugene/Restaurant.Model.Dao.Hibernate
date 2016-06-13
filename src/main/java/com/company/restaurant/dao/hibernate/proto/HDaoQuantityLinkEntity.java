@@ -10,6 +10,10 @@ public abstract class HDaoQuantityLinkEntity <T extends LinkObject> extends HDao
         return selectCurrentAmount(firstId, secondId).intValue();
     }
 
+    protected String amountToString(float amount) {
+        return String.valueOf(Math.round(amount));
+    }
+
     protected void increaseQuantity(int firstId, int secondId, int increasePortion) {
         increaseAmount(firstId, secondId, increasePortion);
     }
