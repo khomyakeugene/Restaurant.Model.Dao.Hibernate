@@ -31,6 +31,7 @@
                 <value>orm/MenuCoursesView.hbm.xml</value>
                 <value>orm/Table.hbm.xml</value>
                 <value>orm/Order.hbm.xml</value>
+                <value>orm/OrderView.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
