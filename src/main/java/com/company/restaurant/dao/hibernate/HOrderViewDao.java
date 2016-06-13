@@ -3,7 +3,9 @@ package com.company.restaurant.dao.hibernate;
 import com.company.restaurant.dao.OrderDao;
 import com.company.restaurant.dao.OrderViewDao;
 import com.company.restaurant.dao.hibernate.proto.HDaoEntity;
+import com.company.restaurant.model.Order;
 import com.company.restaurant.model.OrderView;
+import com.company.restaurant.util.ObjectService;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -33,18 +35,15 @@ public class HOrderViewDao extends HDaoEntity<OrderView> implements OrderViewDao
     @Transactional
     @Override
     public OrderView addOrder(OrderView orderView) {
-        /*
-        Order order = orderDao.addOrder();
+        Order order = orderDao.addOrder((Order) ObjectService.copyObjectByAccessors(orderView, new Order()));
 
         return findObjectById(order.getOrderId());
-       */
-        return null;
     }
 
     @Transactional
     @Override
     public String delOrder(OrderView orderView) {
-        return null;
+        return orderDao.delOrder((Order) ObjectService.copyObjectByAccessors(orderView, new Order()));
     }
 
     @Transactional

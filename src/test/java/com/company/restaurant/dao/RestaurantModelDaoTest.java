@@ -1,6 +1,7 @@
 package com.company.restaurant.dao;
 
 import com.company.restaurant.model.*;
+import com.company.restaurant.util.ObjectService;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -23,9 +24,9 @@ public abstract class RestaurantModelDaoTest {
     private static CourseDao courseDao;
     private static MenuDao menuDao;
     private static TableDao tableDao;
-    private static CookedCourseDao cookedCourseDao;
     private static OrderViewDao orderViewDao;
     private static OrderCourseDao orderCourseDao;
+    private static CookedCourseDao cookedCourseDao;
     private static IngredientDao ingredientDao;
     private static PortionDao portionDao;
     private static WarehouseDao warehouseDao;
@@ -260,5 +261,67 @@ public abstract class RestaurantModelDaoTest {
 
         tableDao.delTable(table);
         assertTrue(tableDao.findTableByNumber(table.getNumber()) == null);
+    }
+
+    @Test (timeout = 2000)
+    public void addFindDelOrderTest() throws Exception {
+        OrderView orderView = new OrderView();
+        orderView.setTableId(tableId());
+        orderView.setEmployeeId(employeeId());
+        orderView.setOrderNumber(Util.getRandomString());
+        orderView.setStateType("A");
+        int orderId = orderViewDao.addOrder(orderView).getOrderId();
+
+        // Just check of successful retrieving from database,  without "full comparing"!!!
+        // Because, at least field <order_datetime> is filling by default (as a current timestamp) on the database level
+        assertTrue(orderViewDao.findOrderById(orderId) != null);
+
+        // Courses in orderView ----------------------------
+        String courseName1 = Util.getRandomString();
+        Course course1 = new Course();
+        course1.setCategoryId(courseCategoryId());
+        course1.setName(courseName1);
+        course1.setWeight(Util.getRandomFloat());
+        course1.setCost(Util.getRandomFloat());
+        course1 = courseDao.addCourse(course1);
+
+        String courseName2 = Util.getRandomString();
+        Course course2 = new Course();
+        course2.setCategoryId(courseCategoryId());
+        course2.setName(courseName2);
+        course2.setWeight(Util.getRandomFloat());
+        course2.setCost(Util.getRandomFloat());
+        course2 = courseDao.addCourse(course2);
+
+        orderCourseDao.addCourseToOrder(orderView, course1, 3);
+        orderCourseDao.addCourseToOrder(orderView, course2, 2);
+
+        for (OrderCourse orderCourse : orderCourseDao.findAllOrderCourses(orderView)) {
+            orderCourseDao.findOrderCourseByCourseId(orderView, orderCourse.getCourseId());
+            System.out.println(orderCourse.getCourseName() + " : " + orderCourse.getCourseCost());
+        }
+
+        orderCourseDao.takeCourseFromOrder(orderView, course1, 2);
+        orderCourseDao.takeCourseFromOrder(orderView, course1, 1);
+        orderCourseDao.takeCourseFromOrder(orderView, course2, 2);
+
+        courseDao.delCourse(courseName1);
+        courseDao.delCourse(courseName2);
+        // ----------------------------
+
+        for (OrderView o : orderViewDao.findAllOrders()) {
+            System.out.println("Order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
+        }
+
+        for (OrderView o : orderViewDao.findAllOrders("A")) {
+            System.out.println("Open orderView id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
+        }
+
+        for (OrderView o : orderViewDao.findAllOrders("B")) {
+            System.out.println("Closed orderView id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
+        }
+
+        orderViewDao.delOrder(orderView);
+        assertTrue(orderViewDao.findOrderById(orderId) == null);
     }
 }

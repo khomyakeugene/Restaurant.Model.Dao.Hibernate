@@ -21,8 +21,8 @@
         <property name="orderNumber">
             <column name="order_number" sql-type="varchar(100)" length="100"/>
         </property>
-        <property name="orderDatetime">
-            <column name="order_datetime" sql-type="timestamp"/>
+        <property name="orderDatetime" type="java.sql.Timestamp" generated="insert" not-null="true">
+            <column name="order_datetime" sql-type="timestamp" default="CURRENT_TIMESTAMP" />
         </property>
     </class>
 </hibernate-mapping>
