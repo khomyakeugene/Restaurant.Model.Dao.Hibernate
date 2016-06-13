@@ -4,8 +4,6 @@ import com.company.restaurant.dao.proto.SqlExpressions;
 import com.company.restaurant.model.LinkObject;
 import org.hibernate.query.Query;
 
-import java.lang.reflect.Field;
-
 import static com.company.restaurant.dao.proto.SqlExpressions.twoFieldAndCondition;
 
 /**
@@ -79,13 +77,7 @@ public abstract class HDaoLinkEntity<T extends LinkObject> extends HDaoEntity<T>
 
         T object = findObjectByTwoAttributeValues(firstId, secondId);
         if (object != null) {
-            try {
-                Field linkDataField = object.getClass().getDeclaredField(linkDataAttributeName);
-                linkDataField.setAccessible(true);
-                result = linkDataField.get(object).toString();
-            } catch (NoSuchFieldException | IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
+            result = object.getLinkData();
         }
 
         return result;
