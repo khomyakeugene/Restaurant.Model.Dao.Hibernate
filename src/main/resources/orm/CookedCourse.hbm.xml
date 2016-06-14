@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.company.restaurant.model.CookedCourse" table="cooked_course" schema="public" catalog="restaurant">
+        <composite-id>
+            <key-property name="employeeId">
+                <column name="employee_id" sql-type="integer"/>
+            </key-property>
+            <key-property name="courseId">
+                <column name="course_id" sql-type="integer"/>
+            </key-property>
+            <key-property name="cookDatetime">
+                <column name="cook_datetime" sql-type="timestamp" default="CURRENT_TIMESTAMP"/>
+            </key-property>
+        </composite-id>
+        <property name="weight">
+            <column name="weight" sql-type="double precision" precision="-1"/>
+        </property>
+    </class>
+</hibernate-mapping>

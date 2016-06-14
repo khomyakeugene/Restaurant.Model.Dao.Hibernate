@@ -35,6 +35,7 @@
                 <value>orm/OrderCourse.hbm.xml</value>
                 <value>orm/OrderCourseView.hbm.xml</value>
                 <value>orm/CookedCourseView.hbm.xml</value>
+                <value>orm/CookedCourse.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -102,7 +103,12 @@
         <property name="orderCourseDao" ref="orderCourseDao"/>
     </bean>
 
+    <bean class="com.company.restaurant.dao.hibernate.HCookedCourseDao" id="cookedCourseDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
     <bean class="com.company.restaurant.dao.hibernate.HCookedCourseViewDao" id="cookedCourseViewDao">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="cookedCourseDao" ref="cookedCourseDao"/>
     </bean>
 </beans>
