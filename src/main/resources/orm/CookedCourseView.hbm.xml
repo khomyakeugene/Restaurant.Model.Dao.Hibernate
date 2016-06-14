@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.company.restaurant.model.CookedCourseView" table="v_cooked_course" schema="public"
+           catalog="restaurant">
+        <composite-id>
+            <key-property name="employeeId" column="employee_id" />
+            <key-property name="courseId" column="course_id" />
+            <key-property name="cookDatetime" column="cook_datetime"/>
+        </composite-id>
+
+        <property name="cookWeight">
+            <column name="cook_weight" sql-type="double precision" precision="-1" not-null="true"/>
+        </property>
+        <property name="courseCategoryId">
+            <column name="course_category_id" sql-type="integer" not-null="true"/>
+        </property>
+        <property name="courseName">
+            <column name="course_name" sql-type="varchar(256)" length="256" not-null="true"/>
+        </property>
+        <property name="courseWeight">
+            <column name="course_weight" sql-type="double precision" precision="-1" not-null="true"/>
+        </property>
+        <property name="courseCost">
+            <column name="course_cost" sql-type="double precision" precision="-1" not-null="true"/>
+        </property>
+        <property name="employeeJobPositionId">
+            <column name="employee_job_position_id" sql-type="integer" not-null="true"/>
+        </property>
+        <property name="employeeFirstName">
+            <column name="employee_first_name" sql-type="varchar(256)" length="256" not-null="true"/>
+        </property>
+        <property name="employeeSecondName">
+            <column name="employee_second_name" sql-type="varchar(256)" length="256" not-null="true"/>
+        </property>
+        <property name="employeePhoneNumber">
+            <column name="employee_phone_number" sql-type="varchar(100)" length="100" not-null="true"/>
+        </property>
+        <property name="employeeSalary">
+            <column name="employee_salary" sql-type="double precision" precision="-1" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>
