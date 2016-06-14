@@ -13,8 +13,11 @@ import java.util.List;
  * Created by Yevhen on 14.06.2016.
  */
 public class HCookedCourseViewDao extends HDaoEntity<CookedCourseView> implements CookedCourseViewDao {
+    private static final String COOK_DATETIME_ATTRIBUTE_NAME = "cookDatetime";
+
     @Override
     protected void initMetadata() {
+        this.orderByCondition = getOrderByCondition(COOK_DATETIME_ATTRIBUTE_NAME);
 
     }
 
