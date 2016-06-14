@@ -1,10 +1,6 @@
 package com.company.restaurant.dao.hibernate.proto;
 
-import com.company.restaurant.dao.proto.SqlExpressions;
 import com.company.restaurant.model.LinkObject;
-import org.hibernate.query.Query;
-
-import static com.company.restaurant.dao.proto.SqlExpressions.twoFieldAndCondition;
 
 /**
  * Created by Yevhen on 11.06.2016.
@@ -42,30 +38,16 @@ public abstract class HDaoLinkEntity<T extends LinkObject> extends HDaoEntity<T>
         return saveOrUpdate(newObject(firstId, secondId, linkData));
     }
 
+    protected T update(int firstId, int secondId, String linkData) {
+        return update(newObject(firstId, secondId, linkData));
+    }
+
     protected String delete(int firstId, int secondId) {
-        String result = null;
-
-        /*
-        Cannot understand why, but using <delete(object)> constantly raises exception such as
-         org.springframework.transaction.TransactionSystemException: Could not commit Hibernate transaction; nested
-         exception is org.hibernate.TransactionException: Transaction was marked for rollback only; cannot commit
-         And, unfortunately, it I cannot also once and for all investigate which is the natural reason of such error
-
         T object = newObject();
         object.setFirstId(firstId);
         object.setSecondId(secondId);
 
         return delete(object);
-         */
-        Query query = getCurrentSession().createQuery(SqlExpressions.deleteExpression(getEntityName() + " " +
-                twoFieldAndCondition(firstIdAttributeName, firstId, secondIdAttributeName, secondId)));
-        try {
-            query.executeUpdate();
-        } catch (Exception e) {
-            result = e.getMessage();
-        }
-
-        return result;
     }
 
     protected T findObjectByTwoAttributeValues(int firstId, int secondId) {

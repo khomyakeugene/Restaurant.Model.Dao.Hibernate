@@ -68,6 +68,7 @@ public abstract class RestaurantModelDaoTest {
         tableDao = applicationContext.getBean(TableDao.class);
         orderViewDao = applicationContext.getBean(OrderViewDao.class);
         orderCourseViewDao = applicationContext.getBean(OrderCourseViewDao.class);
+       // cookedCourseDao = applicationContext.getBean(CookedCourseDao.class);
     }
 
     @BeforeClass
@@ -148,7 +149,7 @@ public abstract class RestaurantModelDaoTest {
         courseCategoryDao.delCourseCategory(name);
     }
 
-    @Test(timeout = 2000)
+    @Test//(timeout = 2000)
     public void addFindDelCourseTest() throws Exception {
         String name = Util.getRandomString();
         Course course = new Course();
@@ -180,7 +181,7 @@ public abstract class RestaurantModelDaoTest {
         }
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelMenuTest() throws Exception {
         String name = Util.getRandomString();
         Menu menu = menuDao.addMenu(name);
@@ -265,7 +266,7 @@ public abstract class RestaurantModelDaoTest {
     }
 
 
-    @Test //(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelOrderTest() throws Exception {
         OrderView orderView = new OrderView();
         orderView.setTableId(tableId());
@@ -327,4 +328,24 @@ public abstract class RestaurantModelDaoTest {
         orderViewDao.delOrder(orderView);
         assertTrue(orderViewDao.findOrderById(orderId) == null);
     }
+/*
+    @Test(timeout = 2000)
+    public void addCookedCourse() throws Exception {
+        Course testCourse = new Course();
+        testCourse.setCategoryId(courseCategoryId());
+        testCourse.setName(Util.getRandomString());
+        testCourse.setWeight(Util.getRandomFloat());
+        testCourse.setCost(Util.getRandomFloat());
+
+        testCourse = courseDao.addCourse(testCourse);
+
+        cookedCourseDao.addCookedCourse(testCourse, employee(), Util.getRandomFloat());
+
+        for (CookedCourse cookedCourse : cookedCourseDao.findAllCookedCourses()) {
+            System.out.println(cookedCourse.getCourseName() + " : " + cookedCourse.getCookDatetime());
+        }
+
+        courseDao.delCourse(testCourse);
+    }
+    */
 }

@@ -161,7 +161,25 @@ public abstract class HDaoEntity<T> {
     }
 
     protected T saveOrUpdate(T object) {
-        getCurrentSession().saveOrUpdate(object);
+        Session session = getCurrentSession();
+
+        // It is important to call session .clear(): otherwise, the exception raises:
+        // org.hibernate.NonUniqueObjectException: A different object with the same identifier value was already
+        // associated with the session : [............
+        session.clear();
+        session.saveOrUpdate(object);
+
+        return object;
+    }
+
+    protected T update(T object) {
+        Session session = getCurrentSession();
+
+        // It is important to call session .clear(): otherwise, the exception raises:
+        // org.hibernate.NonUniqueObjectException: A different object with the same identifier value was already
+        // associated with the session : [............
+        session.clear();
+        session.update(object);
 
         return object;
     }
@@ -170,8 +188,14 @@ public abstract class HDaoEntity<T> {
         String result = null;
 
         if (object != null) {
+            Session session = getCurrentSession();
+            // It is important to call session .clear(): otherwise, sometimes (not all the time!) (cannot understand
+            // the reason of it, but it is!) the exception could raise:
+            // Could not commit Hibernate transaction; nested exception is org.hibernate.TransactionException: Transaction
+            // was marked for rollback only; cannot commit
+            session.clear();
             try {
-                getCurrentSession().delete(object);
+                session.delete(object);
             } catch (Exception e) {
                 result = e.getMessage();
             }
