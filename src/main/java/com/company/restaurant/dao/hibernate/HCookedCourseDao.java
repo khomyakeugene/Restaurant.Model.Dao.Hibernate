@@ -7,6 +7,8 @@ import com.company.restaurant.model.Course;
 import com.company.restaurant.model.Employee;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,7 +28,7 @@ public class HCookedCourseDao extends HDaoEntity<CookedCourse> implements Cooked
 
         cookedCourse.setCourseId(course.getCourseId());
         cookedCourse.setEmployeeId(employee.getEmployeeId());
-        // cookedCourse.setCookDatetime(new Timestamp(new Date().getTime()));
+        cookedCourse.setCookDatetime(new Timestamp(new Date().getTime()));
         cookedCourse.setWeight(weight);
 
         return save(cookedCourse);
