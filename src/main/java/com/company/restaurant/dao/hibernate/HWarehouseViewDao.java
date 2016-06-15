@@ -1,5 +1,6 @@
 package com.company.restaurant.dao.hibernate;
 
+import com.company.restaurant.dao.WarehouseDao;
 import com.company.restaurant.dao.WarehouseViewDao;
 import com.company.restaurant.dao.hibernate.proto.HDaoAmountLinkEntity;
 import com.company.restaurant.model.Ingredient;
@@ -18,6 +19,12 @@ public class HWarehouseViewDao extends HDaoAmountLinkEntity<WarehouseView> imple
     private static final String INGREDIENT_NAME_ATTRIBUTE_NAME = "ingredientName";
     private static final String AMOUNT_ATTRIBUTE_NAME = "amount";
 
+    private WarehouseDao warehouseDao;
+
+    public void setWarehouseDao(WarehouseDao warehouseDao) {
+        this.warehouseDao = warehouseDao;
+    }
+
     @Override
     protected void initMetadata() {
         orderByCondition = getOrderByCondition(INGREDIENT_NAME_ATTRIBUTE_NAME);
@@ -29,13 +36,13 @@ public class HWarehouseViewDao extends HDaoAmountLinkEntity<WarehouseView> imple
     @Transactional
     @Override
     public void addIngredientToWarehouse(Ingredient ingredient, Portion portion, float amount) {
-        increaseAmount(ingredient.getIngredientId(), portion.getPortionId(), amount);
+        warehouseDao.addIngredientToWarehouse(ingredient, portion, amount);
     }
 
     @Transactional
     @Override
     public void takeIngredientFromWarehouse(Ingredient ingredient, Portion portion, float amount) {
-        decreaseAmount(ingredient.getIngredientId(), portion.getPortionId(), amount);
+        warehouseDao.takeIngredientFromWarehouse(ingredient, portion, amount);
     }
 
     @Transactional
