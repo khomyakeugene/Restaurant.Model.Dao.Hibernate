@@ -38,6 +38,7 @@
                 <value>orm/CookedCourseView.hbm.xml</value>
                 <value>orm/Ingredient.hbm.xml</value>
                 <value>orm/PortionDic.hbm.xml</value>
+                <value>orm/WarehouseView.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -121,4 +122,8 @@
     <bean class="com.company.restaurant.dao.hibernate.HPortionDao" id="portionDao">
         <property name="sessionFactory" ref="sessionFactory"/>
      </bean>
+
+    <bean class="com.company.restaurant.dao.hibernate.HWarehouseViewDao" id="warehouseViewDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 </beans>

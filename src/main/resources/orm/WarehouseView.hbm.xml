@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.company.restaurant.model.WarehouseView" table="v_warehouse" schema="public" catalog="restaurant">
+        <composite-id>
+            <key-property name="ingredientId">
+                <column name="ingredient_id" sql-type="integer"/>
+            </key-property>
+            <key-property name="portionId">
+                <column name="portion_id" sql-type="integer"/>
+            </key-property>
+        </composite-id>
+        <property name="amount">
+            <column name="amount" sql-type="double precision" precision="-1" not-null="true"/>
+        </property>
+        <property name="ingredientName">
+            <column name="ingredient_name" sql-type="varchar(256)" length="256" not-null="true"/>
+        </property>
+        <property name="portionTypeId">
+            <column name="portion_type_id" sql-type="integer" not-null="true"/>
+        </property>
+        <property name="measuringTypeId">
+            <column name="measuring_type_id" sql-type="integer" not-null="true"/>
+        </property>
+        <property name="portionAmount">
+            <column name="portion_amount" sql-type="double precision" precision="-1" not-null="true"/>
+        </property>
+        <property name="portionDescription">
+            <column name="portion_description" sql-type="varchar(256)" length="256" not-null="true"/>
+        </property>
+        <property name="portionTypeName">
+            <column name="portion_type_name" sql-type="varchar(256)" length="256" not-null="true"/>
+        </property>
+        <property name="measuringTypeCode">
+            <column name="measuring_type_code" sql-type="char(3)" length="3" not-null="true"/>
+        </property>
+        <property name="measuringTypeName">
+            <column name="measuring_type_name" sql-type="varchar(256)" length="256" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>
