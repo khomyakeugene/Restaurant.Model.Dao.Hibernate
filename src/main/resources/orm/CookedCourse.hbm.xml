@@ -16,7 +16,7 @@
                 <column name="cook_datetime" sql-type="timestamp" default="CURRENT_TIMESTAMP"/>
             </key-property>
         </composite-id>
-        <property name="weight">
+        <property name="cookWeight">
             <column name="weight" sql-type="double precision" precision="-1"/>
         </property>
     </class>

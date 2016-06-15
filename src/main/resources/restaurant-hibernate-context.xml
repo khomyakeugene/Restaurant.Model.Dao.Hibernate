@@ -34,8 +34,8 @@
                 <value>orm/OrderView.hbm.xml</value>
                 <value>orm/OrderCourse.hbm.xml</value>
                 <value>orm/OrderCourseView.hbm.xml</value>
-                <value>orm/CookedCourseView.hbm.xml</value>
                 <value>orm/CookedCourse.hbm.xml</value>
+                <value>orm/CookedCourseView.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">

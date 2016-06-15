@@ -16,6 +16,8 @@ import java.util.List;
  * Created by Yevhen on 14.06.2016.
  */
 public class HCookedCourseViewDao extends HDaoEntity<CookedCourseView> implements CookedCourseViewDao {
+    private static final String COURSE_ID_ATTRIBUTE_NAME = "courseId";
+    private static final String EMPLOYEE_ID_ATTRIBUTE_NAME = "employeeId";
     private static final String COOK_DATETIME_ATTRIBUTE_NAME = "cookDatetime";
 
     private CookedCourseDao cookedCourseDao;
@@ -29,15 +31,51 @@ public class HCookedCourseViewDao extends HDaoEntity<CookedCourseView> implement
         this.orderByCondition = getOrderByCondition(COOK_DATETIME_ATTRIBUTE_NAME);
     }
 
+    /*
     @Transactional
+    public CookedCourseView getCookedCourseView(CookedCourse cookedCourse) {
+        String s = SqlExpressions.fromExpression(getEntityName(),
+                SqlExpressions.whereExpression(
+                        SqlExpressions.andCondition(
+                                SqlExpressions.andCondition(
+                                        SqlExpressions.equalityCondition(COURSE_ID_ATTRIBUTE_NAME,
+                                                String.format(":%s", COURSE_ID_ATTRIBUTE_NAME)),
+                                        SqlExpressions.equalityCondition(EMPLOYEE_ID_ATTRIBUTE_NAME,
+                                                String.format(":%s", EMPLOYEE_ID_ATTRIBUTE_NAME))),
+                                SqlExpressions.equalityCondition(COOK_DATETIME_ATTRIBUTE_NAME,
+                                        String.format(":%s", COOK_DATETIME_ATTRIBUTE_NAME)))), null);
+        Query<CookedCourseView> query = getCurrentSession().createQuery(s, CookedCourseView.class);
+        query.setParameter(COURSE_ID_ATTRIBUTE_NAME, cookedCourse.getCourseId());
+        query.setParameter(EMPLOYEE_ID_ATTRIBUTE_NAME, cookedCourse.getEmployeeId());
+        query.setParameter(COOK_DATETIME_ATTRIBUTE_NAME, cookedCourse.getCookDatetime());
+        CookedCourseView cookedCourseView = query.uniqueResult();
+
+        return cookedCourseView;
+    }
+    */
+
     @Override
     public CookedCourseView addCookedCourse(Course course, Employee employee, Float weight) {
         CookedCourse cookedCourse = cookedCourseDao.addCookedCourse(course, employee, weight);
-        CookedCourseView cookedCourseView = (CookedCourseView) ObjectService.copyObjectByAccessors(
-                cookedCourse, new CookedCourseView());
+        /*
+        // Unfortunately,  t is impossible to use "SELECT CCV FROM CookedCourseView" until this
+        //  "hiberante-transactional" method <CookedCourseView.addCookedCourse> has not finished, because the "new data"
+        // is not accessible until hiberante-transaction is not committed.
+        /* Maybe, it is not incorrectly to leave commented code, but let this "SELECT"-code will be here
+        as a example of an "attempt". Also, if trying to not define this method <CookedCourseView.addCookedCourse>
+        method as NON @Transactional, and then try to use separate method <getCookedCourseView>,
 
-        // Select "full state"
+        CookedCourseView cookedCourseView = getCookedCourseView(cookedCourse);
 
+        either it is @Transactional nor not, the exception
+        org.hibernate.HibernateException: Could not obtain transaction-synchronized Session for current thread
+        is generated :(
+*/
+        // "Partial solution"
+        CookedCourseView cookedCourseView = (CookedCourseView)ObjectService.copyObjectByAccessors(cookedCourse,
+                new CookedCourseView());
+        // Then, it is need to get "other" <CookedCourseView>-fields manually ... "Right now (15.06.2016)" just mark
+        // it as TO-DO
 
         return cookedCourseView;
     }

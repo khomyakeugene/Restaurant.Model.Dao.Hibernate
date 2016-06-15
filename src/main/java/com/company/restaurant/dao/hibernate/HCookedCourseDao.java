@@ -29,7 +29,7 @@ public class HCookedCourseDao extends HDaoEntity<CookedCourse> implements Cooked
         cookedCourse.setCourseId(course.getCourseId());
         cookedCourse.setEmployeeId(employee.getEmployeeId());
         cookedCourse.setCookDatetime(new Timestamp(new Date().getTime()));
-        cookedCourse.setWeight(weight);
+        cookedCourse.setCookWeight(weight);
 
         return save(cookedCourse);
     }

@@ -329,14 +329,13 @@ public abstract class RestaurantModelDaoTest {
         assertTrue(orderViewDao.findOrderById(orderId) == null);
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addDelCookedCourse() throws Exception {
         Course testCourse = new Course();
         testCourse.setCategoryId(courseCategoryId());
         testCourse.setName(Util.getRandomString());
         testCourse.setWeight(Util.getRandomFloat());
         testCourse.setCost(Util.getRandomFloat());
-
         testCourse = courseDao.addCourse(testCourse);
 
         CookedCourseView cookedCourseView = cookedCourseViewDao.addCookedCourse(testCourse, employee(),
