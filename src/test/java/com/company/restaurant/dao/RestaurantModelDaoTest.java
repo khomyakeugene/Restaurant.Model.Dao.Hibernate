@@ -378,6 +378,7 @@ public abstract class RestaurantModelDaoTest {
         for (WarehouseView warehouseView : warehouseViewDao.findAllWarehouseIngredients()) {
             System.out.println(warehouseView.getIngredientName() + ": " + warehouseView.getAmount());
         }
+
         System.out.println("Warehouse elapsing ingredients:");
         for (WarehouseView warehouseView : warehouseViewDao.findAllElapsingWarehouseIngredients((float)500.0)) {
             System.out.println(warehouseView.getIngredientName() + ": " + warehouseView.getPortionDescription() + ": " +

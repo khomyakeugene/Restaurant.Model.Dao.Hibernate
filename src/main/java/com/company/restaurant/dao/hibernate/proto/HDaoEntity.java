@@ -126,7 +126,7 @@ public abstract class HDaoEntity<T> {
         return String.format(SQL_ORDER_BY_CONDITION_PATTERN, attributeName);
     }
 
-    private String getDefaultOrderByCondition() {
+    protected String getDefaultOrderByCondition() {
         if (orderByCondition == null) {
             orderByCondition = getOrderByCondition(getEntityIdAttributeName());
         }
@@ -210,6 +210,14 @@ public abstract class HDaoEntity<T> {
 
     protected String delete(String name) {
         return delete(findObjectByName(name));
+    }
+
+    protected List<T> findObjects(String whereCondition) {
+        Query<T> query = getCurrentSession().createQuery(SqlExpressions.fromExpression(
+                getEntityName(), SqlExpressions.whereExpression(whereCondition),
+                getDefaultOrderByCondition()), getEntityClass());
+
+        return query.list();
     }
 
     protected List<T> findAllObjects() {

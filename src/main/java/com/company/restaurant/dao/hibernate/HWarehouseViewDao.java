@@ -3,9 +3,11 @@ package com.company.restaurant.dao.hibernate;
 import com.company.restaurant.dao.WarehouseDao;
 import com.company.restaurant.dao.WarehouseViewDao;
 import com.company.restaurant.dao.hibernate.proto.HDaoAmountLinkEntity;
+import com.company.restaurant.dao.proto.SqlExpressions;
 import com.company.restaurant.model.Ingredient;
 import com.company.restaurant.model.Portion;
 import com.company.restaurant.model.WarehouseView;
+import org.hibernate.query.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -18,6 +20,9 @@ public class HWarehouseViewDao extends HDaoAmountLinkEntity<WarehouseView> imple
     private static final String PORTION_ID_ATTRIBUTE_NAME = "portionId";
     private static final String INGREDIENT_NAME_ATTRIBUTE_NAME = "ingredientName";
     private static final String AMOUNT_ATTRIBUTE_NAME = "amount";
+    private static final String SQL_ELAPSING_WAREHOUSE_INGREDIENTS =
+            String.format("%s < :%s", AMOUNT_ATTRIBUTE_NAME, AMOUNT_ATTRIBUTE_NAME);
+
 
     private WarehouseDao warehouseDao;
 
@@ -66,6 +71,11 @@ public class HWarehouseViewDao extends HDaoAmountLinkEntity<WarehouseView> imple
     @Transactional
     @Override
     public List<WarehouseView> findAllElapsingWarehouseIngredients(float limit) {
-        return null;
+        Query<WarehouseView> query = getCurrentSession().createQuery(SqlExpressions.fromExpression(
+                getEntityName(), SqlExpressions.whereExpression(SQL_ELAPSING_WAREHOUSE_INGREDIENTS),
+                getDefaultOrderByCondition()), getEntityClass());
+        query.setParameter(AMOUNT_ATTRIBUTE_NAME, limit);
+
+        return query.list();
     }
 }

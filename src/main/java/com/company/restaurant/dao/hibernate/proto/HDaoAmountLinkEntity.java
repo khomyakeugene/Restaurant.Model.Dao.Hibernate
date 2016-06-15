@@ -20,12 +20,12 @@ public abstract class HDaoAmountLinkEntity<T extends LinkObject> extends HDaoLin
     protected void increaseAmount(int firstId, int secondId, float increasePortion) {
         Float currentAmount = selectCurrentAmount(firstId, secondId);
         if (currentAmount == null) {
-            if (increasePortion > 0) {
+            if (increasePortion > 0.0) {
                 save(firstId, secondId, amountToString(increasePortion));
             }
         } else {
             currentAmount += increasePortion;
-            if (currentAmount > 0) {
+            if (currentAmount > 0.0) {
                 saveOrUpdate(firstId, secondId, amountToString(increasePortion));
             } else {
                 delete(firstId, secondId);
