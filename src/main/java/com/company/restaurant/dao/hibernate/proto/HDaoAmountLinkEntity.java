@@ -26,7 +26,7 @@ public abstract class HDaoAmountLinkEntity<T extends LinkObject> extends HDaoLin
         } else {
             currentAmount += increasePortion;
             if (currentAmount > 0.0) {
-                saveOrUpdate(firstId, secondId, amountToString(increasePortion));
+                saveOrUpdate(firstId, secondId, amountToString(currentAmount));
             } else {
                 delete(firstId, secondId);
             }
