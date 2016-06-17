@@ -23,7 +23,6 @@ public class HWarehouseViewDao extends HDaoAmountLinkEntity<WarehouseView> imple
     private static final String SQL_ELAPSING_WAREHOUSE_INGREDIENTS =
             String.format("%s < :%s", AMOUNT_ATTRIBUTE_NAME, AMOUNT_ATTRIBUTE_NAME);
 
-
     private WarehouseDao warehouseDao;
 
     public void setWarehouseDao(WarehouseDao warehouseDao) {

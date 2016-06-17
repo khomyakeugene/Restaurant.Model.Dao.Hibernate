@@ -4,6 +4,8 @@ import com.company.restaurant.dao.proto.SqlExpressions;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.TransientObjectException;
+import org.hibernate.metadata.ClassMetadata;
+import org.hibernate.persister.entity.AbstractEntityPersister;
 import org.hibernate.query.Query;
 
 import javax.persistence.metamodel.Attribute;
@@ -39,7 +41,7 @@ public abstract class HDaoEntity<T> {
         this.sessionFactory = sessionFactory;
     }
 
-    public T getFirstFromList(List<T> objects) {
+    protected T getFirstFromList(List<T> objects) {
         return  (objects != null && objects.size() > 0) ? objects.get(0) : null;
     }
 
@@ -48,7 +50,7 @@ public abstract class HDaoEntity<T> {
                 getActualTypeArguments()[0]);
     }
 
-    public Class<T> getEntityClass() {
+    protected Class<T> getEntityClass() {
         if (entityClass == null) {
             entityClass = getGenericClass();
         }
@@ -135,14 +137,30 @@ public abstract class HDaoEntity<T> {
     }
 
     private EntityType<T> getEntityType() {
+        String s = getTableName();
+
         return sessionFactory.getMetamodel().entity(getEntityClass());
     }
 
     protected String getTableName() {
+        String result = null;
+
         // sessionFactory.getMetamodel().managedType(getEntityClass()).
+        // Do not know how to get ClassMetadata (or "something like" <AbstractEntityPersister>) using
+        // "non deprecated" method :( ; at least, don't understand how can use, for example,
+        // sessionFactory.getMetamodel() approaching the same aim ...
+        ClassMetadata classMetadata = sessionFactory.getClassMetadata(getEntityClass());
+        if (classMetadata instanceof AbstractEntityPersister) {  // And what I have to do if "not instnceof ..."?
+            AbstractEntityPersister abstractEntityPersister = (AbstractEntityPersister) classMetadata;
+            result = abstractEntityPersister.getTableName();
+            // Without possibly presented schema-name
+            int pointIndex = result.lastIndexOf('.');
+            if (pointIndex != -1) {
+                result = result.substring(pointIndex+1);
+            }
+        }
 
-
-        return null;
+        return result;
     }
 
     private String getEntityIdAttributeName() {

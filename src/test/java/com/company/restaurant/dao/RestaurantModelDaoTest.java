@@ -85,7 +85,7 @@ public abstract class RestaurantModelDaoTest {
     public static void tearDownClass() throws Exception {
     }
 
-    @Test(timeout = 2000)
+    @Test//(timeout = 2000)
     public void addFindDelJobPosition() throws Exception {
         String name = Util.getRandomString();
         JobPosition jobPosition = jobPositionDao.addJobPosition(name);
@@ -106,7 +106,7 @@ public abstract class RestaurantModelDaoTest {
         }
     }
 
-    @Test(timeout = 2000)
+    @Test//(timeout = 2000)
     public void addFindDelEmployeeTest() throws Exception {
         String firstName = Util.getRandomString();
         String secondName = Util.getRandomString();
@@ -138,7 +138,7 @@ public abstract class RestaurantModelDaoTest {
         assertTrue(employeeDao.findEmployeeById(employeeId) == null);
     }
 
-    @Test(timeout = 2000)
+    @Test//(timeout = 2000)
     public void addFindDelCourseCategoryTest() throws Exception {
         String name = Util.getRandomString();
         CourseCategory courseCategory = courseCategoryDao.addCourseCategory(name);
@@ -154,7 +154,7 @@ public abstract class RestaurantModelDaoTest {
         courseCategoryDao.delCourseCategory(name);
     }
 
-    @Test(timeout = 2000)
+    @Test//(timeout = 2000)
     public void addFindDelCourseTest() throws Exception {
         String name = Util.getRandomString();
         Course course = new Course();
@@ -186,7 +186,7 @@ public abstract class RestaurantModelDaoTest {
         }
     }
 
-    @Test(timeout = 2000)
+    @Test//(timeout = 2000)
     public void addFindDelMenuTest() throws Exception {
         String name = Util.getRandomString();
         Menu menu = menuDao.addMenu(name);
@@ -236,7 +236,7 @@ public abstract class RestaurantModelDaoTest {
         assertTrue(menuDao.findMenuByName(name) == null);
     }
 
-    @Test(timeout = 2000)
+    @Test//(timeout = 2000)
     public void addFindDelTableTest() throws Exception {
         Table table = new Table();
         table.setDescription(Util.getRandomString());
@@ -271,7 +271,7 @@ public abstract class RestaurantModelDaoTest {
     }
 
 
-    @Test(timeout = 2000)
+    @Test//(timeout = 2000)
     public void addFindDelOrderTest() throws Exception {
         OrderView orderView = new OrderView();
         orderView.setTableId(tableId());
@@ -341,7 +341,7 @@ public abstract class RestaurantModelDaoTest {
         }
     }
 
-    @Test(timeout = 2000)
+    @Test//(timeout = 2000)
     public void addDelCookedCourse() throws Exception {
         Course testCourse = new Course();
         testCourse.setCategoryId(courseCategoryId());
@@ -361,7 +361,7 @@ public abstract class RestaurantModelDaoTest {
         courseDao.delCourse(testCourse);
     }
 
-    @Test(timeout = 10000)
+    @Test//(timeout = 10000)
     public void addFindDelWarehouseTest() throws Exception {
         for (Ingredient ingredient: ingredientDao.findAllIngredients()) {
             for (Portion portion : portionDao.findAllPortions()) {
