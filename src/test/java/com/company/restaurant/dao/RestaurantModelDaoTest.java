@@ -20,14 +20,14 @@ public abstract class RestaurantModelDaoTest {
 
     private static JobPositionDao jobPositionDao;
     private static EmployeeDao employeeDao;
-    private static CourseCategoryDao courseCategoryDao;
-    private static CourseDao courseDao;
     private static MenuDao menuDao;
     private static TableDao tableDao;
+    private static CourseDao courseDao;
+    private static CourseCategoryDao courseCategoryDao;
+    private static CookedCourseViewDao cookedCourseViewDao;
     private static StateGraphDao stateGraphDao;
     private static OrderViewDao orderViewDao;
     private static OrderCourseViewDao orderCourseViewDao;
-    private static CookedCourseViewDao cookedCourseViewDao;
     private static IngredientDao ingredientDao;
     private static PortionDao portionDao;
     private static WarehouseViewDao warehouseViewDao;
@@ -58,19 +58,20 @@ public abstract class RestaurantModelDaoTest {
         return tableList.get(tableList.size()-1).getTableId();
     }
 
+
     protected static void initDataSource(String configLocation) throws Exception {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(configLocation);
 
-        jobPositionDao = applicationContext.getBean(JobPositionDao.class);
-        employeeDao = applicationContext.getBean(EmployeeDao.class);
-        courseCategoryDao = applicationContext.getBean(CourseCategoryDao.class);
-        courseDao = applicationContext.getBean(CourseDao.class);
         menuDao = applicationContext.getBean(MenuDao.class);
         tableDao = applicationContext.getBean(TableDao.class);
+        employeeDao = applicationContext.getBean(EmployeeDao.class);
+        jobPositionDao = applicationContext.getBean(JobPositionDao.class);
+        courseDao = applicationContext.getBean(CourseDao.class);
+        courseCategoryDao = applicationContext.getBean(CourseCategoryDao.class);
+        cookedCourseViewDao = applicationContext.getBean(CookedCourseViewDao.class);
         stateGraphDao = applicationContext.getBean(StateGraphDao.class);
         orderViewDao = applicationContext.getBean(OrderViewDao.class);
         orderCourseViewDao = applicationContext.getBean(OrderCourseViewDao.class);
-        cookedCourseViewDao = applicationContext.getBean(CookedCourseViewDao.class);
         ingredientDao = applicationContext.getBean(IngredientDao.class);
         portionDao = applicationContext.getBean(PortionDao.class);
         warehouseViewDao = applicationContext.getBean(WarehouseViewDao.class);
@@ -85,7 +86,7 @@ public abstract class RestaurantModelDaoTest {
     public static void tearDownClass() throws Exception {
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelJobPosition() throws Exception {
         String name = Util.getRandomString();
         JobPosition jobPosition = jobPositionDao.addJobPosition(name);
@@ -106,7 +107,7 @@ public abstract class RestaurantModelDaoTest {
         }
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelEmployeeTest() throws Exception {
         String firstName = Util.getRandomString();
         String secondName = Util.getRandomString();
@@ -138,7 +139,7 @@ public abstract class RestaurantModelDaoTest {
         assertTrue(employeeDao.findEmployeeById(employeeId) == null);
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelCourseCategoryTest() throws Exception {
         String name = Util.getRandomString();
         CourseCategory courseCategory = courseCategoryDao.addCourseCategory(name);
@@ -154,7 +155,7 @@ public abstract class RestaurantModelDaoTest {
         courseCategoryDao.delCourseCategory(name);
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelCourseTest() throws Exception {
         String name = Util.getRandomString();
         Course course = new Course();
@@ -186,7 +187,7 @@ public abstract class RestaurantModelDaoTest {
         }
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelMenuTest() throws Exception {
         String name = Util.getRandomString();
         Menu menu = menuDao.addMenu(name);
@@ -236,7 +237,7 @@ public abstract class RestaurantModelDaoTest {
         assertTrue(menuDao.findMenuByName(name) == null);
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelTableTest() throws Exception {
         Table table = new Table();
         table.setDescription(Util.getRandomString());
@@ -270,8 +271,7 @@ public abstract class RestaurantModelDaoTest {
         assertTrue(tableDao.findTableByNumber(table.getNumber()) == null);
     }
 
-
-    @Test//(timeout = 2000)
+    @Test (timeout = 2000)
     public void addFindDelOrderTest() throws Exception {
         OrderView orderView = new OrderView();
         orderView.setTableId(tableId());
@@ -341,13 +341,14 @@ public abstract class RestaurantModelDaoTest {
         }
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addDelCookedCourse() throws Exception {
         Course testCourse = new Course();
         testCourse.setCategoryId(courseCategoryId());
         testCourse.setName(Util.getRandomString());
         testCourse.setWeight(Util.getRandomFloat());
         testCourse.setCost(Util.getRandomFloat());
+
         testCourse = courseDao.addCourse(testCourse);
 
         CookedCourseView cookedCourseView = cookedCourseViewDao.addCookedCourse(testCourse, employee(),
@@ -361,7 +362,7 @@ public abstract class RestaurantModelDaoTest {
         courseDao.delCourse(testCourse);
     }
 
-    @Test//(timeout = 10000)
+    @Test(timeout = 10000)
     public void addFindDelWarehouseTest() throws Exception {
         for (Ingredient ingredient: ingredientDao.findAllIngredients()) {
             for (Portion portion : portionDao.findAllPortions()) {
@@ -387,7 +388,6 @@ public abstract class RestaurantModelDaoTest {
         for (WarehouseView warehouseView : warehouseViewDao.findAllWarehouseIngredients()) {
             System.out.println(warehouseView.getIngredientName() + ": " + warehouseView.getAmount());
         }
-
         System.out.println("Warehouse elapsing ingredients:");
         for (WarehouseView warehouseView : warehouseViewDao.findAllElapsingWarehouseIngredients((float)500.0)) {
             System.out.println(warehouseView.getIngredientName() + ": " + warehouseView.getPortionDescription() + ": " +
