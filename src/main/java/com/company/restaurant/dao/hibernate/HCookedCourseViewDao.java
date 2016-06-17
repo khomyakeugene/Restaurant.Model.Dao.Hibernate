@@ -82,8 +82,8 @@ public class HCookedCourseViewDao extends HDaoEntity<CookedCourseView> implement
 
     @Transactional
     @Override
-    public String delCookedCourse(CookedCourseView cookedCourseView) {
-        return cookedCourseDao.delCookedCourse((CookedCourse) ObjectService.copyObjectByAccessors(
+    public void delCookedCourse(CookedCourseView cookedCourseView) {
+        cookedCourseDao.delCookedCourse((CookedCourse) ObjectService.copyObjectByAccessors(
                 cookedCourseView, new CookedCourse()));
     }
 

@@ -19,8 +19,8 @@ public class HJobPositionDao extends HDaoEntitySimpleDic<JobPosition> implements
 
     @Transactional
     @Override
-    public String delJobPosition(String name) {
-        return delete(name);
+    public void delJobPosition(String name) {
+        delete(name);
     }
 
     @Transactional

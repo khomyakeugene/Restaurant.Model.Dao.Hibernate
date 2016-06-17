@@ -24,8 +24,8 @@ public class HPortionDao extends HDaoEntity<Portion> implements PortionDao {
 
     @Transactional
     @Override
-    public String delPortion(Portion portion) {
-        return delete(portion);
+    public void delPortion(Portion portion) {
+        delete(portion);
     }
 
     @Transactional

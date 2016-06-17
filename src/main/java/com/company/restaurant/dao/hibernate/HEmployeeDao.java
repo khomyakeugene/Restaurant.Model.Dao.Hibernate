@@ -27,14 +27,14 @@ public class HEmployeeDao extends HDaoEntity<Employee> implements EmployeeDao {
 
     @Transactional
     @Override
-    public String delEmployee(Employee employee) {
-        return delete(employee);
+    public void delEmployee(Employee employee) {
+        delete(employee);
     }
 
     @Transactional
     @Override
-    public String delEmployee(int employeeId) {
-        return delete(employeeId);
+    public void delEmployee(int employeeId) {
+        delete(employeeId);
     }
 
     @Transactional

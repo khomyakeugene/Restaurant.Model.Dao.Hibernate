@@ -42,8 +42,8 @@ public class HOrderViewDao extends HDaoEntity<OrderView> implements OrderViewDao
 
     @Transactional
     @Override
-    public String delOrder(OrderView orderView) {
-        return orderDao.delOrder((Order) ObjectService.copyObjectByAccessors(orderView, new Order()));
+    public void delOrder(OrderView orderView) {
+        orderDao.delOrder((Order) ObjectService.copyObjectByAccessors(orderView, new Order()));
     }
 
     @Transactional

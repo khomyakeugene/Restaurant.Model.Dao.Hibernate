@@ -138,6 +138,13 @@ public abstract class HDaoEntity<T> {
         return sessionFactory.getMetamodel().entity(getEntityClass());
     }
 
+    protected String getTableName() {
+        // sessionFactory.getMetamodel().managedType(getEntityClass()).
+
+
+        return null;
+    }
+
     private String getEntityIdAttributeName() {
         String result = null;
 
@@ -184,9 +191,7 @@ public abstract class HDaoEntity<T> {
         return object;
     }
 
-    protected String delete(T object) {
-        String result = null;
-
+    protected void delete(T object) {
         if (object != null) {
             Session session = getCurrentSession();
             // It is important to call session .clear(): otherwise, sometimes (not all the time!) (cannot understand
@@ -194,22 +199,16 @@ public abstract class HDaoEntity<T> {
             // Could not commit Hibernate transaction; nested exception is org.hibernate.TransactionException: Transaction
             // was marked for rollback only; cannot commit
             session.clear();
-            try {
-                session.delete(object);
-            } catch (Exception e) {
-                result = e.getMessage();
-            }
+            session.delete(object);
         }
-
-        return result;
     }
 
-    protected String delete(int id) {
-        return delete(findObjectById(id));
+    protected void delete(int id) {
+        delete(findObjectById(id));
     }
 
-    protected String delete(String name) {
-        return delete(findObjectByName(name));
+    protected void delete(String name) {
+        delete(findObjectByName(name));
     }
 
     protected List<T> findObjects(String whereCondition) {

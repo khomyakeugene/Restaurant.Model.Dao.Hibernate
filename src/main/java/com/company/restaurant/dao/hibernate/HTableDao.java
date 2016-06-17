@@ -26,8 +26,8 @@ public class HTableDao extends HDaoEntity<Table> implements TableDao {
 
     @Transactional
     @Override
-    public String delTable(Table table) {
-        return delete(table);
+    public void delTable(Table table) {
+        delete(table);
     }
 
     @Transactional

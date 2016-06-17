@@ -28,14 +28,14 @@ public class HMenuDao extends HDaoEntitySimpleDic<Menu> implements MenuDao {
 
     @Transactional
     @Override
-    public String delMenu(String name) {
-        return delete(name);
+    public void delMenu(String name) {
+        delete(name);
     }
 
     @Transactional
     @Override
-    public String delMenu(Menu menu) {
-        return delete(menu);
+    public void delMenu(Menu menu) {
+        delete(menu);
     }
 
     @Transactional

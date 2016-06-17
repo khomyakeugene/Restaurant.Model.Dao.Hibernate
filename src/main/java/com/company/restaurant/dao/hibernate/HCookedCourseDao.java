@@ -36,8 +36,8 @@ public class HCookedCourseDao extends HDaoEntity<CookedCourse> implements Cooked
 
     @Transactional
     @Override
-    public String delCookedCourse(CookedCourse cookedCourse) {
-        return delete(cookedCourse);
+    public void delCookedCourse(CookedCourse cookedCourse) {
+        delete(cookedCourse);
     }
 
     @Override

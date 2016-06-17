@@ -40,6 +40,7 @@
                 <value>orm/PortionDic.hbm.xml</value>
                 <value>orm/Warehouse.hbm.xml</value>
                 <value>orm/WarehouseView.hbm.xml</value>
+                <value>orm/StateGraph.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -96,6 +97,10 @@
     <bean class="com.company.restaurant.dao.hibernate.HOrderViewDao" id="orderViewDao">
         <property name="sessionFactory" ref="sessionFactory"/>
         <property name="orderDao" ref="orderDao"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.hibernate.HStateGraphDao" id="stateGraphDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HOrderCourseDao" id="orderCourseDao">

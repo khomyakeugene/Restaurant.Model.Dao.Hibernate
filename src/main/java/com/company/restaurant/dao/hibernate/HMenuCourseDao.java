@@ -45,7 +45,7 @@ public class HMenuCourseDao extends HDaoLinkEntity<MenuCourse> implements MenuCo
 
     @Transactional
     @Override
-    public String delCourseFromMenu(Menu menu, Course course) {
-        return delete(menu.getId(), course.getCourseId());
+    public void delCourseFromMenu(Menu menu, Course course) {
+        delete(menu.getId(), course.getCourseId());
     }
 }

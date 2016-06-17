@@ -42,12 +42,12 @@ public abstract class HDaoLinkEntity<T extends LinkObject> extends HDaoEntity<T>
         return update(newObject(firstId, secondId, linkData));
     }
 
-    protected String delete(int firstId, int secondId) {
+    protected void delete(int firstId, int secondId) {
         T object = newObject();
         object.setFirstId(firstId);
         object.setSecondId(secondId);
 
-        return delete(object);
+        delete(object);
     }
 
     protected T findObjectByTwoAttributeValues(int firstId, int secondId) {

@@ -24,14 +24,14 @@ public class HCourseDao extends HDaoEntity<Course> implements CourseDao {
 
     @Transactional
     @Override
-    public String delCourse(Course course) {
-        return delete(course);
+    public void delCourse(Course course) {
+        delete(course);
     }
 
     @Transactional
     @Override
-    public String delCourse(String name) {
-        return delete(name);
+    public void delCourse(String name) {
+        delete(name);
     }
 
     @Transactional

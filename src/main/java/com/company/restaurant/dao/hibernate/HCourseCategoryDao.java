@@ -19,8 +19,8 @@ public class HCourseCategoryDao extends HDaoEntitySimpleDic<CourseCategory> impl
 
     @Transactional
     @Override
-    public String delCourseCategory(String name) {
-        return delete(name);
+    public void delCourseCategory(String name) {
+        delete(name);
     }
 
     @Transactional

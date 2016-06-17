@@ -19,8 +19,8 @@ public class HIngredientDao extends HDaoEntitySimpleDic<Ingredient> implements I
 
     @Transactional
     @Override
-    public String delIngredient(String name) {
-        return delete(name);
+    public void delIngredient(String name) {
+        delete(name);
     }
 
     @Transactional

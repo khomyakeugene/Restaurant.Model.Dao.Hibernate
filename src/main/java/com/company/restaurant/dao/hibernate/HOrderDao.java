@@ -32,8 +32,8 @@ public class HOrderDao extends HDaoEntity<Order> implements OrderDao {
 
     @Transactional
     @Override
-    public String delOrder(Order order) {
-        return delete(order);
+    public void delOrder(Order order) {
+        delete(order);
     }
 
     @Transactional
