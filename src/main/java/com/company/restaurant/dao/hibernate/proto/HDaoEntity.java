@@ -137,8 +137,6 @@ public abstract class HDaoEntity<T> {
     }
 
     private EntityType<T> getEntityType() {
-        String s = getTableName();
-
         return sessionFactory.getMetamodel().entity(getEntityClass());
     }
 
