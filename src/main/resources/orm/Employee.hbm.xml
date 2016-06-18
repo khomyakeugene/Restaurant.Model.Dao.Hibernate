@@ -19,10 +19,10 @@
             <column name="second_name" sql-type="varchar(256)" length="256"/>
         </property>
         <property name="phoneNumber">
-            <column name="phone_number" sql-type="varchar(100)" length="100" not-null="true"/>
+            <column name="phone_number" sql-type="varchar(100)" length="100" not-null="false"/>
         </property>
         <property name="salary">
-            <column name="salary" sql-type="double precision" precision="-1" not-null="true"/>
+            <column name="salary" sql-type="double precision" precision="-1" not-null="false"/>
         </property>
     </class>
 </hibernate-mapping>
