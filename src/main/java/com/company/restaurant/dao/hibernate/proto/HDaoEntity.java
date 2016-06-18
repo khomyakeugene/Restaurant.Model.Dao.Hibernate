@@ -21,7 +21,6 @@ import java.util.Optional;
  * Created by Yevhen on 09.06.2016.
  */
 public abstract class HDaoEntity<T> {
-    private static final String SQL_DELETE_EXPRESSION_PATTERN = "DELETE %s";
     private static final String SQL_ORDER_BY_CONDITION_PATTERN = "ORDER BY %s";
     private static final String NAME_ATTRIBUTE_NAME = "name";
 
