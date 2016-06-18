@@ -76,6 +76,6 @@ public class HOrderViewDao extends HDaoEntity<OrderView> implements OrderViewDao
         Order order = orderDao.updOrderState((Order) ObjectService.copyObjectByAccessors(orderView, new Order()),
                 stateType);
 
-        return findObjectById(order.getOrderId());
+        return (OrderView)ObjectService.copyObjectByAccessors(order, orderView);
     }
 }
