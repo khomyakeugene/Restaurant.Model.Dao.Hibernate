@@ -2,6 +2,7 @@ package com.company.restaurant.dao.hibernate;
 
 import com.company.restaurant.dao.OrderDao;
 import com.company.restaurant.dao.hibernate.proto.HDaoEntity;
+import com.company.restaurant.model.Course;
 import com.company.restaurant.model.Order;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,5 +68,29 @@ public class HOrderDao extends HDaoEntity<Order> implements OrderDao {
         getCurrentSession().update(order);
 
         return order;
+    }
+
+    @Transactional
+    @Override
+    public void addCourseToOrder(Order order, Course course) {
+
+    }
+
+    @Transactional
+    @Override
+    public void takeCourseFromOrder(Order order, Course course) {
+
+    }
+
+    @Transactional
+    @Override
+    public List<Course> findAllOrderCourses(Order order) {
+        return null;
+    }
+
+    @Transactional
+    @Override
+    public Course findOrderCourseByCourseId(Order order, int i) {
+        return null;
     }
 }
