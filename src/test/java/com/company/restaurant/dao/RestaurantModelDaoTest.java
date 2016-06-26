@@ -262,7 +262,9 @@ public abstract class RestaurantModelDaoTest {
         order = orderDao.addOrder(order);
         int orderId = order.getOrderId();
 
-        assertTrue(order.equals(orderDao.findOrderById(order.getOrderId())));
+        Order findOrder = orderDao.findOrderById(order.getOrderId());
+
+        assertTrue(order.equals(findOrder));
 
         // Courses in orderView ----------------------------
         Course course1 = new Course();
