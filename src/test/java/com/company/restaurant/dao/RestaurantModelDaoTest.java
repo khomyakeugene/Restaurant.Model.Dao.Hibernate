@@ -252,7 +252,7 @@ public abstract class RestaurantModelDaoTest {
         assertTrue(tableDao.findTableByNumber(table.getNumber()) == null);
     }
 
-    @Test(timeout = 2000)
+    @Test//(timeout = 2000)
     public void addFindDelOrderTest() throws Exception {
         Order order = new Order();
         order.setOrderNumber(Util.getRandomString());
