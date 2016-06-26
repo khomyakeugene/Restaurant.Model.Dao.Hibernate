@@ -20,5 +20,16 @@
         </property>
         <many-to-one name="courseCategory" column="course_category_id"
                      class="com.company.restaurant.model.CourseCategory" not-null="true"/>
+<!--
+        <set name="orders" table="order_course" inverse="true" lazy="true"
+             fetch="select" cascade="merge">
+            <key>
+                <column name="course_id" not-null="true"/>
+            </key>
+            <many-to-many entity-name="com.company.restaurant.model.Order">
+                <column name="order_id" not-null="true"/>
+            </many-to-many>
+        </set>
+        -->
     </class>
 </hibernate-mapping>

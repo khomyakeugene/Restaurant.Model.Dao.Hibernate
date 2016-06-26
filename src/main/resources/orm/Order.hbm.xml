@@ -21,7 +21,7 @@
                      class="com.company.restaurant.model.Employee" not-null="true"/>
         <many-to-one name="state" column="state_type"
                      class="com.company.restaurant.model.State" not-null="true"/>
-        <bag name="courses" table="order_course" inverse="false" lazy="true"
+        <set name="courses" table="order_course" inverse="false" lazy="true"
               fetch="select" cascade="merge">
             <key>
                 <column name="order_id" not-null="true"/>
@@ -29,6 +29,6 @@
             <many-to-many entity-name="com.company.restaurant.model.Course">
                 <column name="course_id" not-null="true"/>
             </many-to-many>
-        </bag>
+        </set>
     </class>
 </hibernate-mapping>
