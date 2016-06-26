@@ -8,8 +8,8 @@ import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.persister.entity.AbstractEntityPersister;
 import org.hibernate.query.Query;
 
-import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.SingularAttribute;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -165,8 +165,8 @@ public abstract class HDaoEntity<T> {
 
         EntityType<T> entityType = getEntityType();
         if (entityType.hasSingleIdAttribute()) {
-            Optional<Attribute<T, ?>> idAttribute =
-                    entityType.getDeclaredAttributes().stream().
+            Optional<SingularAttribute<T, ?>> idAttribute =
+                    entityType.getDeclaredSingularAttributes().stream().
                             filter(a -> entityType.getSingularAttribute(a.getName()).isId()).findFirst();
             if (idAttribute.isPresent()) {
                 result = idAttribute.get().getName();
