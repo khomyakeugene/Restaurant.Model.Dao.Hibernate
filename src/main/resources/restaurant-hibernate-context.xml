@@ -38,6 +38,7 @@
                 <value>orm/Warehouse.hbm.xml</value>
                 <value>orm/WarehouseView.hbm.xml</value>
                 <value>orm/StateGraph.hbm.xml</value>
+                <value>orm/State.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -84,6 +85,10 @@
     </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HTableDao" id="tableDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.hibernate.HStateDao" id="stateDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 

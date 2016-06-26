@@ -64,7 +64,7 @@ public class HOrderDao extends HDaoEntity<Order> implements OrderDao {
     @Transactional
     @Override
     public Order updOrderState(Order order, String stateType) {
-        order.setStateType(stateType);
+        order.getState().setType(stateType);
         getCurrentSession().update(order);
 
         return order;
