@@ -22,6 +22,6 @@
             <column name="salary" sql-type="double precision" precision="-1" not-null="false"/>
         </property>
         <many-to-one name="jobPosition" column="job_position_id"
-                     class="com.company.restaurant.model.JobPosition" not-null="true"/>
+                     class="com.company.restaurant.model.JobPosition" lazy="false" not-null="true"/>
     </class>
 </hibernate-mapping>

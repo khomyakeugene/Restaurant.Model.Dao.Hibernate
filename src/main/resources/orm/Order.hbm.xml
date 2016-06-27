@@ -16,12 +16,12 @@
             <column name="order_datetime" sql-type="timestamp" default="CURRENT_TIMESTAMP"/>
         </property>
         <many-to-one name="table" column="table_id"
-                     class="com.company.restaurant.model.Table" not-null="true"/>
+                     class="com.company.restaurant.model.Table" not-null="true" lazy="false"/>
         <many-to-one name="waiter" column="employee_id"
-                     class="com.company.restaurant.model.Employee" not-null="true"/>
+                     class="com.company.restaurant.model.Employee" not-null="true" lazy="false"/>
         <many-to-one name="state" column="state_type"
-                     class="com.company.restaurant.model.State" not-null="true"/>
-        <bag name="courses" table="order_course" inverse="false" lazy="true"
+                     class="com.company.restaurant.model.State" not-null="true" lazy="false"/>
+        <bag name="courses" table="order_course" inverse="false" lazy="false"
               fetch="select" cascade="merge">
             <key>
                 <column name="order_id" not-null="true"/>

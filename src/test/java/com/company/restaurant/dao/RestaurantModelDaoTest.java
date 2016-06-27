@@ -282,6 +282,7 @@ public abstract class RestaurantModelDaoTest {
         course2 = courseDao.addCourse(course2);
 
         orderDao.addCourseToOrder(order, course1);
+        orderDao.addCourseToOrder(order, course1);
         orderDao.addCourseToOrder(order, course2);
 
         for (Course course : orderDao.findAllOrderCourses(order)) {
@@ -289,9 +290,13 @@ public abstract class RestaurantModelDaoTest {
             System.out.println(course.getName() + " : " + course.getCost());
         }
 
+        assertTrue(course1.equals(orderDao.findOrderCourseByCourseId(order, course1.getCourseId())));
+
         orderDao.takeCourseFromOrder(order, course1);
         orderDao.takeCourseFromOrder(order, course1);
         orderDao.takeCourseFromOrder(order, course2);
+
+        assertTrue(orderDao.findOrderCourseByCourseId(order, course1.getCourseId()) == null);
 
         courseDao.delCourse(course1);
         courseDao.delCourse(course2);

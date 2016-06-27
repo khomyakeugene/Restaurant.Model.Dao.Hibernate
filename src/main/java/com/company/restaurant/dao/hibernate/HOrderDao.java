@@ -7,12 +7,13 @@ import com.company.restaurant.model.Order;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Yevhen on 13.06.2016.
  */
 public class HOrderDao extends HDaoEntity<Order> implements OrderDao {
-    private static final String STATE_TYPE_ATTRIBUTE_NAME = "stateType";
+    private static final String STATE_ATTRIBUTE_NAME = "state";
     private static final String ORDER_NUMBER_ATTRIBUTE_NAME = "orderNumber";
 
     @Override
@@ -58,7 +59,7 @@ public class HOrderDao extends HDaoEntity<Order> implements OrderDao {
     @Transactional
     @Override
     public List<Order> findAllOrders(String stateType) {
-        return findObjectsByAttributeValue(STATE_TYPE_ATTRIBUTE_NAME, stateType);
+        return findObjectsByAttributeValue(STATE_ATTRIBUTE_NAME, stateType);
     }
 
     @Transactional
@@ -73,24 +74,31 @@ public class HOrderDao extends HDaoEntity<Order> implements OrderDao {
     @Transactional
     @Override
     public void addCourseToOrder(Order order, Course course) {
-
+        order.getCourses().add(course);
+        update(order);
     }
 
     @Transactional
     @Override
     public void takeCourseFromOrder(Order order, Course course) {
-
+        while (order.getCourses().remove(course));
+        update(order);
     }
 
     @Transactional
     @Override
     public List<Course> findAllOrderCourses(Order order) {
-        return null;
+        getCurrentSession().refresh(order);
+
+        return order.getCourses();
     }
 
     @Transactional
     @Override
-    public Course findOrderCourseByCourseId(Order order, int i) {
-        return null;
+    public Course findOrderCourseByCourseId(Order order, int courseId) {
+        Optional<Course> courseOptional = findAllOrderCourses(order).stream().filter(c ->
+                (c.getCourseId() == courseId)).findFirst();
+
+        return courseOptional.isPresent() ? courseOptional.get() : null;
     }
 }
