@@ -27,8 +27,6 @@
                 <value>orm/Employee.hbm.xml</value>
                 <value>orm/CourseCategory.hbm.xml</value>
                 <value>orm/Course.hbm.xml</value>
-                <value>orm/MenuCourse.hbm.xml</value>
-                <value>orm/MenuCoursesView.hbm.xml</value>
                 <value>orm/Table.hbm.xml</value>
                 <value>orm/Order.hbm.xml</value>
                 <value>orm/CookedCourse.hbm.xml</value>
@@ -58,18 +56,8 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean class="com.company.restaurant.dao.hibernate.HMenuCourseDao" id="menuCourseDao">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-
-    <bean class="com.company.restaurant.dao.hibernate.HMenuCoursesViewDao" id="menuCoursesViewDao">
-        <property name="sessionFactory" ref="sessionFactory"/>
-        <property name="menuCourseDao" ref="menuCourseDao"/>
-    </bean>
-
     <bean class="com.company.restaurant.dao.hibernate.HMenuDao" id="menuDao">
         <property name="sessionFactory" ref="sessionFactory"/>
-        <property name="menuCoursesViewDao" ref="menuCoursesViewDao"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HEmployeeDao" id="employeeDao">

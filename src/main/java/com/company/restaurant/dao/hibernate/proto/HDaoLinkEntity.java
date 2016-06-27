@@ -1,6 +1,6 @@
 package com.company.restaurant.dao.hibernate.proto;
 
-import com.company.restaurant.model.LinkObject;
+import com.company.restaurant.model.proto.LinkObject;
 
 /**
  * Created by Yevhen on 11.06.2016.

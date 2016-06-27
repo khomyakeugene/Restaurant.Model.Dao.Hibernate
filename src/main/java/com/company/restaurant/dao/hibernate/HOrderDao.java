@@ -106,7 +106,7 @@ public class HOrderDao extends HDaoEntity<Order> implements OrderDao {
 
     @Transactional
     @Override
-    public List<Course> findAllOrderCourses(Order order) {
+    public List<Course> findOrderCourses(Order order) {
         getCurrentSession().refresh(order);
 
         return order.getCourses();
@@ -115,7 +115,7 @@ public class HOrderDao extends HDaoEntity<Order> implements OrderDao {
     @Transactional
     @Override
     public Course findOrderCourseByCourseId(Order order, int courseId) {
-        Optional<Course> courseOptional = findAllOrderCourses(order).stream().filter(c ->
+        Optional<Course> courseOptional = findOrderCourses(order).stream().filter(c ->
                 (c.getCourseId() == courseId)).findFirst();
 
         return courseOptional.isPresent() ? courseOptional.get() : null;

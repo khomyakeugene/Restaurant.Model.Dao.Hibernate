@@ -1,6 +1,6 @@
 package com.company.restaurant.dao.hibernate.proto;
 
-import com.company.restaurant.model.SimpleDic;
+import com.company.restaurant.model.proto.SimpleDic;
 
 /**
  * Created by Yevhen on 09.06.2016.

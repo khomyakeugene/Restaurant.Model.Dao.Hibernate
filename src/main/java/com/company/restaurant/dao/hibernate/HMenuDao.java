@@ -1,25 +1,19 @@
 package com.company.restaurant.dao.hibernate;
 
-import com.company.restaurant.dao.MenuCoursesViewDao;
 import com.company.restaurant.dao.MenuDao;
 import com.company.restaurant.dao.hibernate.proto.HDaoEntitySimpleDic;
 import com.company.restaurant.model.Course;
 import com.company.restaurant.model.Menu;
-import com.company.restaurant.model.MenuCourseView;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Created by Yevhen on 10.06.2016.
  */
 public class HMenuDao extends HDaoEntitySimpleDic<Menu> implements MenuDao {
-    private MenuCoursesViewDao menuCoursesViewDao;
-
-    public void setMenuCoursesViewDao(MenuCoursesViewDao menuCoursesViewDao) {
-        this.menuCoursesViewDao = menuCoursesViewDao;
-    }
-
     @Transactional
     @Override
     public Menu addMenu(String name) {
@@ -59,24 +53,31 @@ public class HMenuDao extends HDaoEntitySimpleDic<Menu> implements MenuDao {
     @Transactional
     @Override
     public void addCourseToMenu(Menu menu, Course course) {
-        menuCoursesViewDao.addCourseToMenu(menu, course);
+        menu.getCourses().add(course);
+        update(menu);
     }
 
     @Transactional
     @Override
     public void delCourseFromMenu(Menu menu, Course course) {
-        menuCoursesViewDao.delCourseFromMenu(menu, course);
+        menu.getCourses().remove(course);
+        update(menu);
     }
 
     @Transactional
     @Override
-    public List<MenuCourseView> findMenuCourses(Menu menu) {
-        return menuCoursesViewDao.findMenuCourses(menu);
+    public Set<Course> findMenuCourses(Menu menu) {
+        getCurrentSession().refresh(menu);
+
+        return menu.getCourses();
     }
 
     @Transactional
     @Override
-    public MenuCourseView findMenuCourseByCourseId(Menu menu, int courseId) {
-        return menuCoursesViewDao.findMenuCourseByCourseId(menu, courseId);
+    public Course findMenuCourseByCourseId(Menu menu, int courseId) {
+        Optional<Course> courseOptional = findMenuCourses(menu).stream().filter(c ->
+                (c.getCourseId() == courseId)).findFirst();
+
+        return courseOptional.isPresent() ? courseOptional.get() : null;
     }
 }
