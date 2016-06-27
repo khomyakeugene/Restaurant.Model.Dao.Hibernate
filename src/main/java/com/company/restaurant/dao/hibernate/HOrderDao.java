@@ -1,6 +1,9 @@
 package com.company.restaurant.dao.hibernate;
 
+import com.company.restaurant.dao.EmployeeDao;
 import com.company.restaurant.dao.OrderDao;
+import com.company.restaurant.dao.StateDao;
+import com.company.restaurant.dao.TableDao;
 import com.company.restaurant.dao.hibernate.proto.HDaoEntity;
 import com.company.restaurant.model.Course;
 import com.company.restaurant.model.Order;
@@ -15,6 +18,22 @@ import java.util.Optional;
 public class HOrderDao extends HDaoEntity<Order> implements OrderDao {
     private static final String STATE_ATTRIBUTE_NAME = "state";
     private static final String ORDER_NUMBER_ATTRIBUTE_NAME = "orderNumber";
+
+    private StateDao stateDao;
+    private TableDao tableDao;
+    private EmployeeDao employeeDao;
+
+    public void setStateDao(StateDao stateDao) {
+        this.stateDao = stateDao;
+    }
+
+    public void setTableDao(TableDao tableDao) {
+        this.tableDao = tableDao;
+    }
+
+    public void setEmployeeDao(EmployeeDao employeeDao) {
+        this.employeeDao = employeeDao;
+    }
 
     @Override
     protected void initMetadata() {
@@ -59,7 +78,7 @@ public class HOrderDao extends HDaoEntity<Order> implements OrderDao {
     @Transactional
     @Override
     public List<Order> findAllOrders(String stateType) {
-        return findObjectsByAttributeValue(STATE_ATTRIBUTE_NAME, stateType);
+        return findObjectsByAttributeValue(STATE_ATTRIBUTE_NAME, stateDao.findStateByType(stateType));
     }
 
     @Transactional

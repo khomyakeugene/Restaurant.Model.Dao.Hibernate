@@ -266,7 +266,7 @@ public abstract class RestaurantModelDaoTest {
 
         assertTrue(order.equals(findOrder));
 
-        // Courses in orderView ----------------------------
+        // Courses in order ----------------------------
         Course course1 = new Course();
         course1.setName(Util.getRandomString());
         course1.setWeight(Util.getRandomFloat());
@@ -307,11 +307,11 @@ public abstract class RestaurantModelDaoTest {
         }
 
         for (Order o : orderDao.findAllOrders("A")) {
-            System.out.println("Open orderView id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
+            System.out.println("Open order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
         }
 
         for (Order o : orderDao.findAllOrders("B")) {
-            System.out.println("Closed orderView id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
+            System.out.println("Closed order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
         }
 
         orderDao.delOrder(order);

@@ -94,6 +94,9 @@
 
     <bean class="com.company.restaurant.dao.hibernate.HOrderDao" id="orderDao">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="stateDao" ref="stateDao"/>
+        <property name="employeeDao" ref="employeeDao"/>
+        <property name="tableDao" ref="tableDao"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HStateGraphDao" id="stateGraphDao">
