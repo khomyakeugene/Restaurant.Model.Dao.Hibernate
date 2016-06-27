@@ -1,6 +1,7 @@
 package com.company.restaurant.dao.hibernate.proto;
 
 import com.company.restaurant.dao.proto.SqlExpressions;
+import com.company.restaurant.model.proto.SimpleDic;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.TransientObjectException;
@@ -181,6 +182,19 @@ public abstract class HDaoEntity<T> {
 
         return object;
     }
+
+    protected T save(String name) {
+        T result = newObject();
+        if (result instanceof SimpleDic) {
+            ((SimpleDic) result).setName(name);
+            result = save(result);
+        } else {
+            result = null;
+        }
+
+        return result;
+    }
+
 
     protected T saveOrUpdate(T object) {
         Session session = getCurrentSession();

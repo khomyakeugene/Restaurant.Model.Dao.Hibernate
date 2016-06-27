@@ -1,19 +1,24 @@
 package com.company.restaurant.dao.hibernate;
 
 import com.company.restaurant.dao.MenuDao;
-import com.company.restaurant.dao.hibernate.proto.HDaoEntitySimpleDic;
+import com.company.restaurant.dao.hibernate.proto.HDaoEntityCourseCollecting;
 import com.company.restaurant.model.Course;
 import com.company.restaurant.model.Menu;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 /**
  * Created by Yevhen on 10.06.2016.
  */
-public class HMenuDao extends HDaoEntitySimpleDic<Menu> implements MenuDao {
+public class HMenuDao extends HDaoEntityCourseCollecting<Menu> implements MenuDao {
+    @Override
+    protected void initMetadata() {
+        this.orderByCondition = getOrderByCondition(nameAttributeName);
+    }
+
     @Transactional
     @Override
     public Menu addMenu(String name) {
@@ -67,17 +72,12 @@ public class HMenuDao extends HDaoEntitySimpleDic<Menu> implements MenuDao {
     @Transactional
     @Override
     public Set<Course> findMenuCourses(Menu menu) {
-        getCurrentSession().refresh(menu);
-
-        return menu.getCourses();
+        return new HashSet<>(findCourses(menu));
     }
 
     @Transactional
     @Override
     public Course findMenuCourseByCourseId(Menu menu, int courseId) {
-        Optional<Course> courseOptional = findMenuCourses(menu).stream().filter(c ->
-                (c.getCourseId() == courseId)).findFirst();
-
-        return courseOptional.isPresent() ? courseOptional.get() : null;
+        return findCourseByCourseId(menu,courseId);
     }
 }

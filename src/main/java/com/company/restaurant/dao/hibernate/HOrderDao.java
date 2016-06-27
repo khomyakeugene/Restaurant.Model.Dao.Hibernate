@@ -4,18 +4,18 @@ import com.company.restaurant.dao.EmployeeDao;
 import com.company.restaurant.dao.OrderDao;
 import com.company.restaurant.dao.StateDao;
 import com.company.restaurant.dao.TableDao;
-import com.company.restaurant.dao.hibernate.proto.HDaoEntity;
+import com.company.restaurant.dao.hibernate.proto.HDaoEntityCourseCollecting;
 import com.company.restaurant.model.Course;
 import com.company.restaurant.model.Order;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by Yevhen on 13.06.2016.
  */
-public class HOrderDao extends HDaoEntity<Order> implements OrderDao {
+public class HOrderDao extends HDaoEntityCourseCollecting<Order> implements OrderDao {
     private static final String STATE_ATTRIBUTE_NAME = "state";
     private static final String ORDER_NUMBER_ATTRIBUTE_NAME = "orderNumber";
 
@@ -107,17 +107,12 @@ public class HOrderDao extends HDaoEntity<Order> implements OrderDao {
     @Transactional
     @Override
     public List<Course> findOrderCourses(Order order) {
-        getCurrentSession().refresh(order);
-
-        return order.getCourses();
+        return new ArrayList<>(findCourses(order));
     }
 
     @Transactional
     @Override
     public Course findOrderCourseByCourseId(Order order, int courseId) {
-        Optional<Course> courseOptional = findOrderCourses(order).stream().filter(c ->
-                (c.getCourseId() == courseId)).findFirst();
-
-        return courseOptional.isPresent() ? courseOptional.get() : null;
+        return findCourseByCourseId(order, courseId);
     }
 }
