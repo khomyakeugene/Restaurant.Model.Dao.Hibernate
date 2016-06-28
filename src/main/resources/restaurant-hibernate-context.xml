@@ -30,12 +30,14 @@
                 <value>orm/Table.hbm.xml</value>
                 <value>orm/Order.hbm.xml</value>
                 <value>orm/Ingredient.hbm.xml</value>
-                <value>orm/PortionDic.hbm.xml</value>
+                <value>orm/Portion.hbm.xml</value>
                 <value>orm/Warehouse.hbm.xml</value>
                 <value>orm/WarehouseView.hbm.xml</value>
                 <value>orm/StateGraph.hbm.xml</value>
                 <value>orm/State.hbm.xml</value>
                 <value>orm/CookedCourse.hbm.xml</value>
+                <value>orm/MeasuringType.hbm.xml</value>
+                <value>orm/PortionType.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
