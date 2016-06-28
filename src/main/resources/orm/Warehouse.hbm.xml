@@ -6,15 +6,22 @@
 
     <class name="com.company.restaurant.model.Warehouse" table="warehouse" schema="public" catalog="restaurant">
         <composite-id>
-            <key-property name="ingredientId">
+            <key-property name="ingredientId" type="integer">
                 <column name="ingredient_id" sql-type="integer"/>
             </key-property>
-            <key-property name="portionId">
+            <key-property name="portionId" type="integer">
                 <column name="portion_id" sql-type="integer"/>
             </key-property>
         </composite-id>
         <property name="amount">
             <column name="amount" sql-type="double precision" precision="-1"/>
         </property>
+
+        <many-to-one name="ingredient" column="ingredient_id"
+                     class="com.company.restaurant.model.Ingredient" insert="false" update="false"
+                     cascade="merge" lazy="false"/>
+        <many-to-one name="portion" column="portion_id"
+                     class="com.company.restaurant.model.Portion" insert="false" update="false"
+                     cascade="merge" lazy="false"/>
     </class>
 </hibernate-mapping>

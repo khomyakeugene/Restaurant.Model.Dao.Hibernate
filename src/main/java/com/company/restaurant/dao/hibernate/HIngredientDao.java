@@ -34,4 +34,10 @@ public class HIngredientDao extends HDaoEntitySimpleDic<Ingredient> implements I
     public Ingredient findIngredientById(int ingredientId) {
         return findObjectById(ingredientId);
     }
+
+    @Transactional
+    @Override
+    public Ingredient findIngredientByName(String name) {
+        return findObjectByName(name);
+    }
 }
