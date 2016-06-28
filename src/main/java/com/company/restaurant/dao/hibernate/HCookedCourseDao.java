@@ -19,17 +19,17 @@ public class HCookedCourseDao extends HDaoEntity<CookedCourse> implements Cooked
 
     @Override
     protected void initMetadata() {
-        this.orderByCondition = getOrderByCondition(COOK_DATETIME_ATTRIBUTE_NAME);
     }
+
     @Transactional
     @Override
     public CookedCourse addCookedCourse(Course course, Employee employee, Float weight) {
         CookedCourse cookedCourse = new CookedCourse();
 
-        cookedCourse.setCourseId(course.getCourseId());
-        cookedCourse.setEmployeeId(employee.getEmployeeId());
         cookedCourse.setCookDatetime(new Timestamp(new Date().getTime()));
-        cookedCourse.setCookWeight(weight);
+        cookedCourse.setWeight(weight);
+        cookedCourse.setCourse(course);
+        cookedCourse.setEmployee(employee);
 
         return save(cookedCourse);
     }
@@ -40,6 +40,7 @@ public class HCookedCourseDao extends HDaoEntity<CookedCourse> implements Cooked
         delete(cookedCourse);
     }
 
+    @Transactional
     @Override
     public List<CookedCourse> findAllCookedCourses() {
         return findAllObjects();

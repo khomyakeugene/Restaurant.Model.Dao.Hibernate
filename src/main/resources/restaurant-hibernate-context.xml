@@ -29,14 +29,13 @@
                 <value>orm/Course.hbm.xml</value>
                 <value>orm/Table.hbm.xml</value>
                 <value>orm/Order.hbm.xml</value>
-                <value>orm/CookedCourse.hbm.xml</value>
-                <value>orm/CookedCourseView.hbm.xml</value>
                 <value>orm/Ingredient.hbm.xml</value>
                 <value>orm/PortionDic.hbm.xml</value>
                 <value>orm/Warehouse.hbm.xml</value>
                 <value>orm/WarehouseView.hbm.xml</value>
                 <value>orm/StateGraph.hbm.xml</value>
                 <value>orm/State.hbm.xml</value>
+                <value>orm/CookedCourse.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -93,11 +92,6 @@
 
     <bean class="com.company.restaurant.dao.hibernate.HCookedCourseDao" id="cookedCourseDao">
         <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-
-    <bean class="com.company.restaurant.dao.hibernate.HCookedCourseViewDao" id="cookedCourseViewDao">
-        <property name="sessionFactory" ref="sessionFactory"/>
-        <property name="cookedCourseDao" ref="cookedCourseDao"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HIngredientDao" id="ingredientDao">
