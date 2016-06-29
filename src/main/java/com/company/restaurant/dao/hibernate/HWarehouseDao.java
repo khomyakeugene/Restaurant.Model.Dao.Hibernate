@@ -21,6 +21,7 @@ public class HWarehouseDao extends HDaoAmountLinkEntity<Warehouse> implements Wa
     private static final String PORTION_ID_ATTRIBUTE_NAME = "portionId";
     private static final String AMOUNT_ATTRIBUTE_NAME = "amount";
     private static final String INGREDIENT_ATTRIBUTE_NAME = "ingredient";
+    private static final String PORTION_ATTRIBUTE_NAME = "portion";
     private static final String SQL_ELAPSING_WAREHOUSE_INGREDIENTS =
             String.format("%s < :%s", AMOUNT_ATTRIBUTE_NAME, AMOUNT_ATTRIBUTE_NAME);
 
@@ -36,10 +37,36 @@ public class HWarehouseDao extends HDaoAmountLinkEntity<Warehouse> implements Wa
     }
 
     @Override
+    protected Object prepareFirstIdAttributeValue(int firstId) {
+        Ingredient ingredient = new Ingredient();
+        ingredient.setIngredientId(firstId);
+
+        return ingredient;
+    }
+
+    @Override
+    protected Object prepareSecondIdAttributeValue(int secondId) {
+        Portion portion = new Portion();
+        portion.setPortionId(secondId);
+
+        return portion;
+    }
+
+    @Override
+    protected Warehouse newObject(int firstId, int secondId, String linkData) {
+        Warehouse result = new Warehouse();
+        result.getIngredient().setIngredientId(firstId);
+        result.getPortion().setPortionId(secondId);
+        result.setLinkData(linkData);
+
+        return result;
+    }
+
+    @Override
     protected void initMetadata() {
-        orderByCondition = getOrderByCondition(INGREDIENT_ID_ATTRIBUTE_NAME);
-        firstIdAttributeName = INGREDIENT_ID_ATTRIBUTE_NAME;
-        secondIdAttributeName = PORTION_ID_ATTRIBUTE_NAME;
+        orderByCondition = getOrderByCondition(INGREDIENT_ATTRIBUTE_NAME);
+        firstIdAttributeName = INGREDIENT_ATTRIBUTE_NAME;
+        secondIdAttributeName = PORTION_ATTRIBUTE_NAME;
         linkDataAttributeName = AMOUNT_ATTRIBUTE_NAME;
     }
 
@@ -57,6 +84,13 @@ public class HWarehouseDao extends HDaoAmountLinkEntity<Warehouse> implements Wa
         if (amount > 0.0) {
             decreaseAmount(ingredient.getIngredientId(), portion.getPortionId(), amount);
         }
+    }
+
+    @Transactional
+    @Override
+    public Warehouse findIngredientInWarehouse(Ingredient ingredient, Portion portion) {
+        return findObjectByTwoAttributeValues(INGREDIENT_ATTRIBUTE_NAME, ingredient,
+                PORTION_ATTRIBUTE_NAME, portion);
     }
 
     @Transactional

@@ -14,6 +14,14 @@ public abstract class HDaoLinkEntity<T extends LinkObject> extends HDaoEntity<T>
     protected String secondIdAttributeName;
     protected String linkDataAttributeName;
 
+    protected Object prepareFirstIdAttributeValue(int firstId) {
+        return firstId;
+    }
+
+    protected Object prepareSecondIdAttributeValue(int secondId) {
+        return secondId;
+    }
+
     @Override
     protected void initMetadata() {
         firstIdAttributeName = FIRST_ID_ATTRIBUTE_NAME;
@@ -43,15 +51,18 @@ public abstract class HDaoLinkEntity<T extends LinkObject> extends HDaoEntity<T>
     }
 
     protected void delete(int firstId, int secondId) {
-        T object = newObject();
-        object.setFirstId(firstId);
-        object.setSecondId(secondId);
-
-        delete(object);
+        // It is important to find <object> before <delete> - otherwise, hibernate-message such as
+        // "org.hibernate.event.internal.DefaultDeleteEventListener deleteTransientEntity, INFO: HHH000114:
+        // Handling transient entity in delete processing" could be generated
+        T object = findObjectByTwoAttributeValues(firstId, secondId);
+        if (object != null) {
+            delete(object);
+        }
     }
 
     protected T findObjectByTwoAttributeValues(int firstId, int secondId) {
-        return findObjectByTwoAttributeValues(firstIdAttributeName, firstId, secondIdAttributeName, secondId);
+        return findObjectByTwoAttributeValues(firstIdAttributeName, prepareFirstIdAttributeValue(firstId),
+                secondIdAttributeName, prepareSecondIdAttributeValue(secondId));
     }
 
     protected String selectLinkData(int firstId, int secondId) {
