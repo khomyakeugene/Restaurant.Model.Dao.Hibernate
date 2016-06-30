@@ -258,9 +258,16 @@ public abstract class RestaurantModelDaoTest {
 
     @Test(timeout = 2000)
     public void addFindDelOrderTest() throws Exception {
+        Employee employee = employeeDao.findEmployeeById(employeeId());
+
+        Waiter waiter = new Waiter();
+        ObjectService.copyObjectByAccessors(employee, waiter);
+        waiter.setEmployeeId(0);
+        waiter = (Waiter)employeeDao.addEmployee(waiter);
+
         Order order = new Order();
         order.setOrderNumber(Util.getRandomString());
-        order.setWaiter(employeeDao.findEmployeeById(employeeId()));
+        order.setWaiter(waiter);
         order.setTable(tableDao.findTableById(tableId()));
         order.setState(stateDao.findStateByType("A"));
         order = orderDao.addOrder(order);
@@ -318,8 +325,12 @@ public abstract class RestaurantModelDaoTest {
             System.out.println("Closed order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
         }
 
+        System.out.println(waiter);
+
         orderDao.delOrder(order);
         assertTrue(orderDao.findOrderById(orderId) == null);
+
+        employeeDao.delEmployee(waiter.getEmployeeId());
 
         for (StateGraph stateGraph : stateGraphDao.findEntityStateGraph(orderDao.orderEntityName())) {
             System.out.println("stateGraph: entityName: " + stateGraph.getEntityName() +

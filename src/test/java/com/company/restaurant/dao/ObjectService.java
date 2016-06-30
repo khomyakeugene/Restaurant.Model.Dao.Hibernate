@@ -1,4 +1,4 @@
-package com.company.restaurant.util;
+package com.company.restaurant.dao;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
