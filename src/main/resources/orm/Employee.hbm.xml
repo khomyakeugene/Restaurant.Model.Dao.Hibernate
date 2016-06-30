@@ -4,11 +4,15 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.company.restaurant.model.Employee" table="employee" schema="public" catalog="restaurant">
+    <class name="com.company.restaurant.model.Employee" table="employee"
+           discriminator-value="Employee"
+           schema="public" catalog="restaurant">
         <id name="employeeId">
             <column name="employee_id" sql-type="integer"/>
             <generator class="identity"/>
         </id>
+        <discriminator column="dtype" type="java.lang.String"/>
+
         <property name="firstName">
             <column name="first_name" sql-type="varchar(256)" length="256"/>
         </property>
@@ -23,5 +27,15 @@
         </property>
         <many-to-one name="jobPosition" column="job_position_id"
                      class="com.company.restaurant.model.JobPosition" lazy="false" not-null="true"/>
+
+        <subclass name="com.company.restaurant.model.Waiter"
+                  discriminator-value="Waiter">
+            <bag name="orders" table="order" inverse="true" lazy="false" fetch="select">
+                <key>
+                    <column name="employee_id" not-null="true"/>
+                </key>
+                <one-to-many class="com.company.restaurant.model.Order"/>
+            </bag>
+        </subclass>
     </class>
 </hibernate-mapping>
