@@ -30,7 +30,7 @@
 
         <subclass name="com.company.restaurant.model.Waiter"
                   discriminator-value="Waiter">
-            <bag name="orders" table="order" inverse="true" lazy="false" fetch="select">
+            <bag name="orders" table="order" lazy="false" fetch="select" inverse="true">
                 <key>
                     <column name="employee_id" not-null="true"/>
                 </key>
