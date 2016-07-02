@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertTrue;
 
@@ -248,8 +249,7 @@ public abstract class RestaurantModelDaoTest {
 
         // Whole table list
         for (Table table1 : tableDao.findAllTables()) {
-            System.out.println("Table: id: " + table1.getId() + ", name: " + table1.getName() +
-                    ", number: " + table1.getNumber());
+            System.out.println(table1);
         }
 
         tableDao.delTable(table);
@@ -327,7 +327,10 @@ public abstract class RestaurantModelDaoTest {
         if (employeeIsWaiter) {
             waiter = (Waiter)employeeDao.findEmployeeById(employee.getEmployeeId());
             System.out.println(waiter);
-            assertTrue(order.equals(waiter.getOrders().get(0)));
+
+            Set<Order> orders = waiter.getOrders();
+            Order[] orderArray = orders.toArray(new Order[orders.size()]);
+            assertTrue(orderArray[0].equals(order));
         }
 
         orderDao.delOrder(order);
@@ -388,19 +391,17 @@ public abstract class RestaurantModelDaoTest {
 
             System.out.println("Warehouse: " + ingredient.getName() + " : ");
             for (Warehouse warehouse : warehouseDao.findIngredientInWarehouseByName(ingredient.getName())) {
-                System.out.println(warehouse.getPortion().getDescription() + ": " + warehouse.getAmount());
+                System.out.println(warehouse);
             }
         }
 
         System.out.println("Warehouse all ingredients:");
         for (Warehouse warehouse : warehouseDao.findAllWarehouseIngredients()) {
-            System.out.println(warehouse.getIngredient().getName() + ": " + warehouse.getAmount());
+            System.out.println(warehouse);
         }
         System.out.println("Warehouse elapsing ingredients:");
         for (Warehouse warehouse : warehouseDao.findAllElapsingWarehouseIngredients((float)500.0)) {
-            System.out.println(warehouse.getIngredient().getName() + ": " +
-                    warehouse.getPortion().getDescription() + ": " +
-                    warehouse.getAmount());
+            System.out.println(warehouse);
         }
     }
 }

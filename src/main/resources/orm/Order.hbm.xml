@@ -22,7 +22,7 @@
         <many-to-one name="state" column="state_type"
                      class="com.company.restaurant.model.State" not-null="true" lazy="false"/>
         <bag name="courses" table="order_course" inverse="false" lazy="false"
-              fetch="select" cascade="merge">
+              fetch="select">
             <key>
                 <column name="order_id" not-null="true"/>
             </key>
