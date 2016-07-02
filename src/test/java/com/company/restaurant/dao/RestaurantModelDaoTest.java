@@ -262,20 +262,19 @@ public abstract class RestaurantModelDaoTest {
         Waiter waiter = new Waiter();
         ObjectService.copyObjectByAccessors(employee, waiter);
         waiter.setEmployeeId(0);
-        waiter = (Waiter)employeeDao.addEmployee(waiter);
-        int waiterId = waiter.getEmployeeId();
+
+        employee = employeeDao.addEmployee(waiter);
+        boolean employeeIsWaiter = (employee instanceof Waiter);
 
         Order order = new Order();
         order.setOrderNumber(Util.getRandomString());
-        order.setWaiter(waiter);
+        order.setWaiter(employee);
         order.setTable(tableDao.findTableById(tableId()));
         order.setState(stateDao.findStateByType("A"));
         order = orderDao.addOrder(order);
         int orderId = order.getOrderId();
 
-        Order findOrder = orderDao.findOrderById(order.getOrderId());
-
-        assertTrue(order.equals(findOrder));
+        assertTrue(order.equals(orderDao.findOrderById(order.getOrderId())));
 
         // Courses in order ----------------------------
         Course course1 = new Course();
@@ -298,7 +297,7 @@ public abstract class RestaurantModelDaoTest {
 
         for (Course course : orderDao.findOrderCourses(order)) {
             orderDao.findOrderCourseByCourseId(order, course.getCourseId());
-            System.out.println(course.getName() + " : " + course.getCost());
+            System.out.println(course);
         }
 
         assertTrue(course1.equals(orderDao.findOrderCourseByCourseId(order, course1.getCourseId())));
@@ -325,19 +324,19 @@ public abstract class RestaurantModelDaoTest {
             System.out.println("Closed order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
         }
 
-        Employee e = employeeDao.findEmployeeById(waiterId);
-        System.out.println(e);
+        if (employeeIsWaiter) {
+            waiter = (Waiter)employeeDao.findEmployeeById(employee.getEmployeeId());
+            System.out.println(waiter);
+            assertTrue(order.equals(waiter.getOrders().get(0)));
+        }
 
         orderDao.delOrder(order);
         assertTrue(orderDao.findOrderById(orderId) == null);
 
-        employeeDao.delEmployee(waiterId);
+        employeeDao.delEmployee(employee);
 
         for (StateGraph stateGraph : stateGraphDao.findEntityStateGraph(orderDao.orderEntityName())) {
-            System.out.println("stateGraph: entityName: " + stateGraph.getEntityName() +
-                    ", initStateType: " + stateGraph.getInitStateType() +
-                    ", finiteStateType: " + stateGraph.getFiniteStateType() +
-                    ", comment: " + stateGraph.getComment());
+            System.out.println(stateGraph);
         }
     }
 
