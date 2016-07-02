@@ -99,10 +99,7 @@ public abstract class RestaurantModelDaoTest {
         // Test delete of non-existent data
         jobPositionDao.delJobPosition(name);
 
-        for (JobPosition jP : jobPositionDao.findAllJobPositions()) {
-            System.out.println("Job position Id :" + jP.getId() +
-                    ", Job position name :" + jP.getName());
-        }
+        jobPositionDao.findAllJobPositions().forEach(System.out::println);
     }
 
     @Test(timeout = 2000)
@@ -170,9 +167,7 @@ public abstract class RestaurantModelDaoTest {
         courseDao.delCourse(name);
 
         // Whole course list
-        for (Course course1 : courseDao.findAllCourses()) {
-            System.out.println("Course: id: " + course1.getCourseId() + ", name: " + course1.getName());
-        }
+        courseDao.findAllCourses().forEach(System.out::println);
     }
 
     @Test(timeout = 2000)
@@ -205,7 +200,7 @@ public abstract class RestaurantModelDaoTest {
 
         for (Course course : menuDao.findMenuCourses(menu)) {
             menuDao.findMenuCourseByCourseId(menu, course.getCourseId());
-            System.out.println(course.getName() + ": " + course.getCourseCategory().getName());
+            System.out.println(course);
         }
 
         menuDao.delCourseFromMenu(menu, course1);
@@ -217,9 +212,7 @@ public abstract class RestaurantModelDaoTest {
         courseDao.delCourse(course2);
         // ----------------------------
 
-        for (Menu m : menuDao.findAllMenus()) {
-            System.out.println("menu_id: " + m.getId() + ", name: " + m.getName());
-        }
+        menuDao.findAllMenus().forEach(System.out::println);
 
         menuDao.delMenu(name);
         assertTrue(menuDao.findMenuByName(name) == null);
@@ -248,9 +241,7 @@ public abstract class RestaurantModelDaoTest {
         assertTrue(table.equals(tableDao.findTableById(table.getTableId())));
 
         // Whole table list
-        for (Table table1 : tableDao.findAllTables()) {
-            System.out.println(table1);
-        }
+        tableDao.findAllTables().forEach(System.out::println);
 
         tableDao.delTable(table);
         assertTrue(tableDao.findTableByNumber(table.getNumber()) == null);
@@ -312,17 +303,14 @@ public abstract class RestaurantModelDaoTest {
         courseDao.delCourse(course2);
         // ----------------------------
 
-        for (Order o : orderDao.findAllOrders()) {
-            System.out.println("Order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
-        }
+        System.out.println("All orders:");
+        orderDao.findAllOrders().forEach(System.out::println);
 
-        for (Order o : orderDao.findAllOrders("A")) {
-            System.out.println("Open order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
-        }
+        System.out.println("Open orders:");
+        orderDao.findAllOrders("A").forEach(System.out::println);
 
-        for (Order o : orderDao.findAllOrders("B")) {
-            System.out.println("Closed order id: " + o.getOrderId() + ", Order number: " + o.getOrderNumber());
-        }
+        System.out.println("Closed orders:");
+        orderDao.findAllOrders("B").forEach(System.out::println);
 
         if (employeeIsWaiter) {
             waiter = (Waiter)employeeDao.findEmployeeById(employee.getEmployeeId());
@@ -338,9 +326,7 @@ public abstract class RestaurantModelDaoTest {
 
         employeeDao.delEmployee(employee);
 
-        for (StateGraph stateGraph : stateGraphDao.findEntityStateGraph(orderDao.orderEntityName())) {
-            System.out.println(stateGraph);
-        }
+        stateGraphDao.findEntityStateGraph(orderDao.orderEntityName()).forEach(System.out::println);
     }
 
     @Test(timeout = 2000)
@@ -355,9 +341,7 @@ public abstract class RestaurantModelDaoTest {
         CookedCourse cookedCourse = cookedCourseDao.addCookedCourse(testCourse, employee(),
                 Util.getRandomFloat());
 
-        for (CookedCourse cC : cookedCourseDao.findAllCookedCourses()) {
-            System.out.println(cC.getCourse().getName() + " : " + cC.getCookDatetime());
-        }
+        cookedCourseDao.findAllCookedCourses().forEach(System.out::println);
 
         cookedCourseDao.delCookedCourse(cookedCourse);
         courseDao.delCourse(testCourse);
