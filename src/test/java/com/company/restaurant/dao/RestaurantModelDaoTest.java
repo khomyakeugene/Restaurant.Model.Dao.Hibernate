@@ -324,7 +324,7 @@ public abstract class RestaurantModelDaoTest {
         orderDao.delOrder(order);
         assertTrue(orderDao.findOrderById(orderId) == null);
 
-        employeeDao.delEmployee(employee);
+        employeeDao.delEmployee(employee.getEmployeeId());
 
         stateGraphDao.findEntityStateGraph(orderDao.orderEntityName()).forEach(System.out::println);
     }
