@@ -37,5 +37,15 @@
                 <one-to-many class="com.company.restaurant.model.Order"/>
             </set>
         </subclass>
+
+        <subclass name="com.company.restaurant.model.Cook"
+                  discriminator-value="Cook">
+            <set name="courses" table="cooked_course" lazy="false" fetch="select" inverse="true">
+                <key>
+                    <column name="employee_id" not-null="true"/>
+                </key>
+                <one-to-many class="com.company.restaurant.model.CookedCourse"/>
+            </set>
+        </subclass>
     </class>
 </hibernate-mapping>
