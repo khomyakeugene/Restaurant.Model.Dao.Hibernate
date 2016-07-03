@@ -42,7 +42,7 @@ public abstract class HDaoEntity<T> {
     }
 
     protected T getFirstFromList(List<T> objects) {
-        return  (objects != null && objects.size() > 0) ? objects.get(0) : null;
+        return (objects != null && objects.size() > 0) ? objects.get(0) : null;
     }
 
     private Class<T> getGenericClass() {
@@ -154,7 +154,7 @@ public abstract class HDaoEntity<T> {
             // Without possibly presented schema-name
             int pointIndex = result.lastIndexOf('.');
             if (pointIndex != -1) {
-                result = result.substring(pointIndex+1);
+                result = result.substring(pointIndex + 1);
             }
         }
 
