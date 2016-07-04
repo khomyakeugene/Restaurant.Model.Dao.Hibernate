@@ -37,6 +37,7 @@
                 <value>orm/CookedCourse.hbm.xml</value>
                 <value>orm/MeasuringType.hbm.xml</value>
                 <value>orm/PortionType.hbm.xml</value>
+                <value>orm/CourseIngredient.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -107,5 +108,9 @@
         <property name="sessionFactory" ref="sessionFactory"/>
         <property name="ingredientDao" ref="ingredientDao"/>
         <property name="portionDao" ref="portionDao"/>
+    </bean>
+
+    <bean class="com.company.restaurant.dao.hibernate.HCourseIngredientDao" id="courseIngredientDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 </beans>

@@ -17,8 +17,6 @@ import java.util.List;
  * Created by Yevhen on 16.06.2016.
  */
 public class HWarehouseDao extends HDaoAmountLinkEntity<Warehouse> implements WarehouseDao {
-    private static final String INGREDIENT_ID_ATTRIBUTE_NAME = "ingredientId";
-    private static final String PORTION_ID_ATTRIBUTE_NAME = "portionId";
     private static final String AMOUNT_ATTRIBUTE_NAME = "amount";
     private static final String INGREDIENT_ATTRIBUTE_NAME = "ingredient";
     private static final String PORTION_ATTRIBUTE_NAME = "portion";

@@ -1,0 +1,31 @@
+package com.company.restaurant.dao.hibernate;
+
+import com.company.restaurant.dao.CourseIngredientDao;
+import com.company.restaurant.dao.hibernate.proto.HDaoEntity;
+import com.company.restaurant.model.Course;
+import com.company.restaurant.model.CourseIngredient;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * Created by Yevhen on 04.07.2016.
+ */
+public class HCourseIngredientDao extends HDaoEntity<CourseIngredient> implements CourseIngredientDao {
+    private static final String COURSE_ATTRIBUTE_NAME = "course";
+
+    @Override
+    protected void initMetadata() {
+
+    }
+
+    @Transactional
+    @Override
+    public Set<CourseIngredient> findCourseIngredients(Course course) {
+        Set<CourseIngredient> result = new HashSet<>();
+        result.addAll(findObjectsByAttributeValue(COURSE_ATTRIBUTE_NAME, course));
+
+        return result;
+    }
+}
