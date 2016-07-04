@@ -6,7 +6,6 @@ import com.company.restaurant.model.Course;
 import com.company.restaurant.model.CourseIngredient;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -23,9 +22,6 @@ public class HCourseIngredientDao extends HDaoEntity<CourseIngredient> implement
     @Transactional
     @Override
     public Set<CourseIngredient> findCourseIngredients(Course course) {
-        Set<CourseIngredient> result = new HashSet<>();
-        result.addAll(findObjectsByAttributeValue(COURSE_ATTRIBUTE_NAME, course));
-
-        return result;
+        return findObjectSetByAttributeValue(COURSE_ATTRIBUTE_NAME, course);
     }
 }

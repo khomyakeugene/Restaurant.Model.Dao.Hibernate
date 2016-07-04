@@ -15,8 +15,10 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Created by Yevhen on 09.06.2016.
@@ -262,6 +264,14 @@ public abstract class HDaoEntity<T> {
         query.setParameter(attributeName, value);
 
         return query.list();
+    }
+
+
+    protected Set<T> findObjectSetByAttributeValue(String attributeName, Object value) {
+        HashSet<T> result = new HashSet<>();
+        result.addAll(findObjectsByAttributeValue(attributeName, value));
+
+        return result;
     }
 
 
