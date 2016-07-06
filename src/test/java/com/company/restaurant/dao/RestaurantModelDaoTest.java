@@ -86,7 +86,7 @@ public abstract class RestaurantModelDaoTest {
     public static void tearDownClass() throws Exception {
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelJobPosition() throws Exception {
         String name = Util.getRandomString();
         JobPosition jobPosition = jobPositionDao.addJobPosition(name);
@@ -102,7 +102,7 @@ public abstract class RestaurantModelDaoTest {
         jobPositionDao.findAllJobPositions().forEach(System.out::println);
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelEmployeeTest() throws Exception {
         String firstName = Util.getRandomString();
         String secondName = Util.getRandomString();
@@ -126,7 +126,7 @@ public abstract class RestaurantModelDaoTest {
         assertTrue(employeeDao.findEmployeeById(employeeId) == null);
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelCourseCategoryTest() throws Exception {
         String name = Util.getRandomString();
         CourseCategory courseCategory = courseCategoryDao.addCourseCategory(name);
@@ -140,7 +140,7 @@ public abstract class RestaurantModelDaoTest {
         courseCategoryDao.delCourseCategory(name);
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelCourseTest() throws Exception {
         CourseCategory courseCategory = new CourseCategory();
         courseCategory.setId(courseCategoryId());
@@ -173,7 +173,7 @@ public abstract class RestaurantModelDaoTest {
         });
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelMenuTest() throws Exception {
         String name = Util.getRandomString();
         Menu menu = menuDao.addMenu(name);
@@ -221,7 +221,7 @@ public abstract class RestaurantModelDaoTest {
         assertTrue(menuDao.findMenuByName(name) == null);
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelTableTest() throws Exception {
         Table table = new Table();
         table.setDescription(Util.getRandomString());
@@ -250,7 +250,7 @@ public abstract class RestaurantModelDaoTest {
         assertTrue(tableDao.findTableByNumber(table.getNumber()) == null);
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addFindDelOrderTest() throws Exception {
         Employee employee = employeeDao.findEmployeeById(employeeId());
         Waiter waiter = new Waiter();
@@ -332,7 +332,7 @@ public abstract class RestaurantModelDaoTest {
         stateGraphDao.findEntityStateGraph(orderDao.orderEntityName()).forEach(System.out::println);
     }
 
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void addDelCookedCourse() throws Exception {
         Course testCourse = new Course();
         testCourse.setName(Util.getRandomString());
