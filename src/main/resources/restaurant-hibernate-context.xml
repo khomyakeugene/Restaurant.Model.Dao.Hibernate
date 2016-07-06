@@ -43,6 +43,13 @@
         <property name="hibernateProperties">
             <value>
                 hibernate.dialect=org.hibernate.dialect.PostgreSQL9Dialect
+                hibernate.format_sql=true
+                hibernate.show_sql=false
+                hibernate.cache.use_second_level_cache=true
+                hibernate.cache.use_query_cache=false
+                hibernate.generate_statistics=false
+                org.hibernate.cache.ehcache.configurationResourceName=/ehcache.xml
+                hibernate.cache.region.factory_class=org.hibernate.cache.ehcache.EhCacheRegionFactory
             </value>
         </property>
     </bean>

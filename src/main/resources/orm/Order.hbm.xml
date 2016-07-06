@@ -5,6 +5,7 @@
 <hibernate-mapping>
 
     <class name="com.company.restaurant.model.Order" table="order" schema="public" catalog="restaurant">
+        <cache usage="read-write"/>
         <id name="orderId">
             <column name="order_id" sql-type="integer"/>
             <generator class="identity"/>

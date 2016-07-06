@@ -6,6 +6,7 @@
 
     <class name="com.company.restaurant.model.CourseCategory" table="course_category_dic" schema="public"
            catalog="restaurant">
+        <cache usage="read-only"/>
         <id name="id">
             <column name="course_category_id" sql-type="integer"/>
             <generator class="identity"/>

@@ -5,6 +5,7 @@
 <hibernate-mapping>
 
     <class name="com.company.restaurant.model.Warehouse" table="warehouse" schema="public" catalog="restaurant">
+        <cache usage="read-write"/>
         <composite-id>
             <key-many-to-one name="ingredient" column="ingredient_id"
                              class="com.company.restaurant.model.Ingredient"

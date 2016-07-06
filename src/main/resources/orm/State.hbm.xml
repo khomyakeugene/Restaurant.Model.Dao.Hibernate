@@ -5,6 +5,7 @@
 <hibernate-mapping>
 
     <class name="com.company.restaurant.model.State" table="state_dic" schema="public" catalog="restaurant">
+        <cache usage="read-only"/>
         <id name="stateType">
             <column name="state_type" sql-type="char"/>
         </id>

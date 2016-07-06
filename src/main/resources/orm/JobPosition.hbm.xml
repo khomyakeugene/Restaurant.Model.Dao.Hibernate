@@ -6,6 +6,7 @@
 
     <class name="com.company.restaurant.model.JobPosition" table="job_position_dic" schema="public"
            catalog="restaurant">
+        <cache usage="read-only"/>
         <id name="id">
             <column name="job_position_id" sql-type="integer"/>
             <generator class="identity"/>

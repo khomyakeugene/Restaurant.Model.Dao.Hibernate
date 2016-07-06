@@ -150,6 +150,7 @@ public abstract class HDaoEntity<T> {
         // "non deprecated" method :( ; at least, don't understand how can use, for example,
         // sessionFactory.getMetamodel() approaching the same aim ...
         ClassMetadata classMetadata = sessionFactory.getClassMetadata(getEntityClass());
+        // ClassMetadata classMetadata = sessionFactory.getMetamodel().
         if (classMetadata instanceof AbstractEntityPersister) {  // And what I have to do if "not instnceof ..."?
             AbstractEntityPersister abstractEntityPersister = (AbstractEntityPersister) classMetadata;
             result = abstractEntityPersister.getTableName();

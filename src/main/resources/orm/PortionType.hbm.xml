@@ -6,6 +6,7 @@
 
     <class name="com.company.restaurant.model.PortionType" table="portion_type_dic" schema="public"
            catalog="restaurant">
+        <cache usage="read-only"/>
         <id name="portionTypeId">
             <column name="portion_type_id" sql-type="integer"/>
         </id>

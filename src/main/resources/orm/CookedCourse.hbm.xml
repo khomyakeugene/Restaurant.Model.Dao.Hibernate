@@ -5,6 +5,7 @@
 <hibernate-mapping>
 
     <class name="com.company.restaurant.model.CookedCourse" table="cooked_course" schema="public" catalog="restaurant">
+        <cache usage="read-write"/>
         <id name="cookedCourseId">
             <column name="cooked_course_id" sql-type="integer"/>
             <generator class="identity"/>

@@ -6,6 +6,7 @@
 
     <class name="com.company.restaurant.model.MeasuringType" table="measuring_type_dic" schema="public"
            catalog="restaurant">
+        <cache usage="read-only"/>
         <id name="measuringTypeId">
             <column name="measuring_type_id" sql-type="integer"/>
         </id>

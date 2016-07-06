@@ -5,6 +5,7 @@
 <hibernate-mapping>
 
     <class name="com.company.restaurant.model.StateGraph" table="state_graph" schema="public" catalog="restaurant">
+        <cache usage="read-only"/>
         <composite-id>
             <key-property name="initStateType">
                 <column name="init_state_type" sql-type="char"/>
