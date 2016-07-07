@@ -16,6 +16,12 @@
                              lazy="false"/>
         </composite-id>
 
+        <many-to-one name="course" column="course_id"
+                     class="com.company.restaurant.model.Course"
+                     insert="false" update="false" lazy="false"/>
+        <many-to-one name="ingredient" column="ingredient_id"
+                     class="com.company.restaurant.model.Ingredient"
+                     insert="false" update="false" lazy="false"/>
         <many-to-one name="portion" column="portion_id"
                      class="com.company.restaurant.model.Portion"
                      lazy="false"/>

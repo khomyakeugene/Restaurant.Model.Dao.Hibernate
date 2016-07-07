@@ -28,6 +28,5 @@
             </key>
             <one-to-many class="com.company.restaurant.model.CourseIngredient"/>
         </set>
-
     </class>
 </hibernate-mapping>
