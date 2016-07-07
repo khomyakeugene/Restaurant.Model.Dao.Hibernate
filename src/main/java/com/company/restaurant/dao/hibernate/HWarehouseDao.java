@@ -56,7 +56,7 @@ public class HWarehouseDao extends HDaoAmountLinkEntity<Warehouse> implements Wa
 
     @Override
     protected void initMetadata() {
-        orderByCondition = getOrderByCondition(INGREDIENT_ATTRIBUTE_NAME);
+        orderByAttributeName = INGREDIENT_ATTRIBUTE_NAME;
         firstIdAttributeName = INGREDIENT_ATTRIBUTE_NAME;
         secondIdAttributeName = PORTION_ATTRIBUTE_NAME;
         linkDataAttributeName = AMOUNT_ATTRIBUTE_NAME;

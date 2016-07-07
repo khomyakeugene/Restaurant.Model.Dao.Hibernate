@@ -16,7 +16,7 @@ import java.util.Set;
 public class HMenuDao extends HDaoEntityCourseCollecting<Menu> implements MenuDao {
     @Override
     protected void initMetadata() {
-        this.orderByCondition = getOrderByCondition(nameAttributeName);
+        this.orderByAttributeName = nameAttributeName;
     }
 
     @Transactional

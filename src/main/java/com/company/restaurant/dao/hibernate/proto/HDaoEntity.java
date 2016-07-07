@@ -35,7 +35,7 @@ public abstract class HDaoEntity<T> {
     private boolean useCriteriaQuery;
 
     protected String nameAttributeName = NAME_ATTRIBUTE_NAME;
-    protected String orderByCondition;
+    protected String orderByAttributeName;
 
     public HDaoEntity() {
         initMetadata();
@@ -44,6 +44,14 @@ public abstract class HDaoEntity<T> {
     // Could be overridden in subclasses
     protected void initMetadata() {
 
+    }
+
+    public String getOrderByAttributeName() {
+        if (orderByAttributeName == null) {
+            orderByAttributeName = getEntityIdAttributeName();
+        }
+
+        return orderByAttributeName;
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -137,6 +145,10 @@ public abstract class HDaoEntity<T> {
         return sessionFactory.getCriteriaBuilder();
     }
 
+    private CriteriaQuery<T> createCriteriaQuery() {
+        return getCriteriaBuilder().createQuery(getEntityClass());
+    }
+
     private List<T> getCriteriaQueryResultList(CriteriaQuery<T> criteriaQuery) {
         return getCurrentSession().createQuery(criteriaQuery).getResultList();
     }
@@ -146,15 +158,12 @@ public abstract class HDaoEntity<T> {
     }
 
     protected String getOrderByCondition(String attributeName) {
-        return String.format(SQL_ORDER_BY_CONDITION_PATTERN, attributeName);
+        return (attributeName == null || attributeName.isEmpty()) ? "" :
+                String.format(SQL_ORDER_BY_CONDITION_PATTERN, attributeName);
     }
 
     protected String getDefaultOrderByCondition() {
-        if (orderByCondition == null) {
-            orderByCondition = getOrderByCondition(getEntityIdAttributeName());
-        }
-
-        return orderByCondition;
+        return getOrderByCondition(getOrderByAttributeName());
     }
 
     private EntityType<T> getEntityType() {
@@ -262,25 +271,38 @@ public abstract class HDaoEntity<T> {
         delete(findObjectByName(name));
     }
 
-    protected List<T> findObjects(String whereCondition) {
-        Query<T> query = getCurrentSession().createQuery(SqlExpressions.fromExpression(
-                getEntityName(), SqlExpressions.whereExpression(whereCondition),
-                getDefaultOrderByCondition()), getEntityClass());
-
-        return query.list();
-    }
-
-    protected List<T> findAllObjects() {
+    private List<T> hqlFindAllObjects() {
         Query<T> query = getCurrentSession().createQuery(SqlExpressions.fromExpression(
                 getEntityName(), getDefaultOrderByCondition()), getEntityClass());
 
         return query.list();
     }
 
+    private List<T> criteriaFindAllObjects() {
+        CriteriaBuilder criteriaBuilder = getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = createCriteriaQuery();
+        Root<T> rootEntity = criteriaQuery.from(getEntityType());
+
+        String orderByAttributeName = getOrderByAttributeName();
+        if (orderByAttributeName != null && !orderByAttributeName.isEmpty()) {
+            criteriaQuery.orderBy(criteriaBuilder.asc(rootEntity.get(orderByAttributeName)));
+        }
+
+        return getCriteriaQueryResultList(criteriaQuery);
+    }
+
+    protected List<T> findAllObjects() {
+        return useCriteriaQuery ? criteriaFindAllObjects() : hqlFindAllObjects() ;
+    }
 
     private List<T> hqlFindObjectsByAttributeValue(String attributeName, Object value) {
+        String orderByAttributeName = getOrderByAttributeName();
+        String orderByCondition = (orderByAttributeName != null && !orderByAttributeName.isEmpty() &&
+                !orderByAttributeName.equals(attributeName)) ? getOrderByCondition(getOrderByAttributeName()) : null;
+
         Query<T> query = getCurrentSession().createQuery(SqlExpressions.fromExpressionWithFieldCondition(
-                getEntityName(), attributeName, String.format(":%s", attributeName)), getEntityClass());
+                getEntityName(), attributeName, String.format(":%s", attributeName), orderByCondition),
+                getEntityClass());
         query.setParameter(attributeName, value);
 
         return query.list();
@@ -288,9 +310,14 @@ public abstract class HDaoEntity<T> {
 
     private List<T> criteriaFindObjectsByAttributeValue(String attributeName, Object value) {
         CriteriaBuilder criteriaBuilder = getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(getEntityClass());
+        CriteriaQuery<T> criteriaQuery = createCriteriaQuery();
         Root<T> rootEntity = criteriaQuery.from(getEntityType());
         criteriaQuery.where(criteriaBuilder.equal(rootEntity.get(attributeName), value));
+
+        String orderByAttributeName = getOrderByAttributeName();
+        if (orderByAttributeName != null && !orderByAttributeName.isEmpty() && !attributeName.equals(orderByAttributeName)) {
+            criteriaQuery.orderBy(criteriaBuilder.asc(rootEntity.get(orderByAttributeName)));
+        }
 
         return getCriteriaQueryResultList(criteriaQuery);
     }

@@ -8,7 +8,7 @@ import com.company.restaurant.model.proto.SimpleDic;
 public class HDaoEntitySimpleDic<T extends SimpleDic> extends HDaoEntity<T> {
     @Override
     protected void initMetadata() {
-        this.orderByCondition = getOrderByCondition(nameAttributeName);
+        this.orderByAttributeName = nameAttributeName;
     }
 
     protected T save(String name) {
