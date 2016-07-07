@@ -390,7 +390,7 @@ public abstract class RestaurantModelDaoTest {
         courseDao.delCourse(testCourse);
     }
 
-    @Test//(timeout = 30000)
+    @Test(timeout = 30000)
     public void addFindDelWarehouseTest() throws Exception {
         System.out.println("portionDao test ... ");
         for (Portion portion : portionDao.findAllPortions()) {
