@@ -1,7 +1,6 @@
 package com.company.restaurant.dao.hibernate;
 
 import com.company.restaurant.dao.IngredientDao;
-import com.company.restaurant.dao.PortionDao;
 import com.company.restaurant.dao.WarehouseDao;
 import com.company.restaurant.dao.hibernate.proto.HDaoAmountLinkEntity;
 import com.company.restaurant.dao.proto.SqlExpressions;
@@ -24,14 +23,9 @@ public class HWarehouseDao extends HDaoAmountLinkEntity<Warehouse> implements Wa
             String.format("%s < :%s", AMOUNT_ATTRIBUTE_NAME, AMOUNT_ATTRIBUTE_NAME);
 
     private IngredientDao ingredientDao;
-    private PortionDao portionDao;
 
     public void setIngredientDao(IngredientDao ingredientDao) {
         this.ingredientDao = ingredientDao;
-    }
-
-    public void setPortionDao(PortionDao portionDao) {
-        this.portionDao = portionDao;
     }
 
     @Override

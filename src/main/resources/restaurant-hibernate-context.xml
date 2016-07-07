@@ -62,62 +62,72 @@
 
     <bean class="com.company.restaurant.dao.hibernate.HJobPositionDao" id="jobPositionDao">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="useCriteriaQuery" value="true"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HMenuDao" id="menuDao">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="useCriteriaQuery" value="true"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HEmployeeDao" id="employeeDao">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="useCriteriaQuery" value="true"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HCourseCategoryDao" id="courseCategoryDao">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="useCriteriaQuery" value="true"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HCourseDao" id="courseDao">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="useCriteriaQuery" value="true"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HTableDao" id="tableDao">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="useCriteriaQuery" value="true"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HStateDao" id="stateDao">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="useCriteriaQuery" value="true"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HOrderDao" id="orderDao">
         <property name="sessionFactory" ref="sessionFactory"/>
-        <property name="stateDao" ref="stateDao"/>
-        <property name="employeeDao" ref="employeeDao"/>
-        <property name="tableDao" ref="tableDao"/>
+        <property name="useCriteriaQuery" value="true"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HStateGraphDao" id="stateGraphDao">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="useCriteriaQuery" value="true"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HCookedCourseDao" id="cookedCourseDao">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="useCriteriaQuery" value="true"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HIngredientDao" id="ingredientDao">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="useCriteriaQuery" value="true"/>
      </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HPortionDao" id="portionDao">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="useCriteriaQuery" value="true"/>
      </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HWarehouseDao" id="warehouseDao">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="useCriteriaQuery" value="true"/>
         <property name="ingredientDao" ref="ingredientDao"/>
-        <property name="portionDao" ref="portionDao"/>
     </bean>
 
     <bean class="com.company.restaurant.dao.hibernate.HCourseIngredientDao" id="courseIngredientDao">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="useCriteriaQuery" value="true"/>
     </bean>
 </beans>

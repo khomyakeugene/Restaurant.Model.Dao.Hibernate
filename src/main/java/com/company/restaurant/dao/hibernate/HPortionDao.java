@@ -11,11 +11,6 @@ import java.util.List;
  * Created by Yevhen on 15.06.2016.
  */
 public class HPortionDao extends HDaoEntity<Portion> implements PortionDao {
-    @Override
-    protected void initMetadata() {
-
-    }
-
     @Transactional
     @Override
     public Portion addPortion(Portion portion) {

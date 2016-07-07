@@ -17,10 +17,6 @@ import java.util.List;
 public class HCookedCourseDao extends HDaoEntity<CookedCourse> implements CookedCourseDao{
     private static final String COOK_DATETIME_ATTRIBUTE_NAME = "cookDatetime";
 
-    @Override
-    protected void initMetadata() {
-    }
-
     @Transactional
     @Override
     public CookedCourse addCookedCourse(Course course, Employee employee, Float weight) {

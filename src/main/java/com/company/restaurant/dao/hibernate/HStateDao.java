@@ -11,11 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class HStateDao extends HDaoEntity<State> implements StateDao {
     private static final String STATE_TYPE_ATTRIBUTE_NAME = "state_type";
 
-    @Override
-    protected void initMetadata() {
-
-    }
-
     @Transactional
     @Override
     public State findStateByType(String stateType) {

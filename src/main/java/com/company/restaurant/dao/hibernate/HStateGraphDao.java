@@ -13,11 +13,6 @@ import java.util.List;
 public class HStateGraphDao extends HDaoEntity<StateGraph> implements StateGraphDao {
     private static final String ENTITY_NAME_ATTRIBUTE_NAME = "entityName";
 
-    @Override
-    protected void initMetadata() {
-
-    }
-
     @Transactional
     @Override
     public List<StateGraph> findEntityStateGraph(String entityName) {

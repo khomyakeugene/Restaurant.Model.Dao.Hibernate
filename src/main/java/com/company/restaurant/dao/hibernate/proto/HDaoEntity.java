@@ -29,6 +29,7 @@ public abstract class HDaoEntity<T> {
 
     private Class<T> entityClass;
     private SessionFactory sessionFactory;
+    private boolean useCriteriaQuery;
 
     protected String nameAttributeName = NAME_ATTRIBUTE_NAME;
     protected String orderByCondition;
@@ -37,10 +38,17 @@ public abstract class HDaoEntity<T> {
         initMetadata();
     }
 
-    protected abstract void initMetadata();
+    // Could be overridden in subclasses
+    protected void initMetadata() {
+
+    }
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    public void setUseCriteriaQuery(boolean useCriteriaQuery) {
+        this.useCriteriaQuery = useCriteriaQuery;
     }
 
     protected T getFirstFromList(List<T> objects) {

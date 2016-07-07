@@ -11,11 +11,6 @@ import java.util.List;
  * Created by Yevhen on 11.06.2016.
  */
 public class HCourseDao extends HDaoEntity<Course> implements CourseDao {
-    @Override
-    protected void initMetadata() {
-
-    }
-
     @Transactional
     @Override
     public Course addCourse(Course course) {

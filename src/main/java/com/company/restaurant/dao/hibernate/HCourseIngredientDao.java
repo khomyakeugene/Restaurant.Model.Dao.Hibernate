@@ -14,11 +14,6 @@ import java.util.Set;
 public class HCourseIngredientDao extends HDaoEntity<CourseIngredient> implements CourseIngredientDao {
     private static final String COURSE_ATTRIBUTE_NAME = "course";
 
-    @Override
-    protected void initMetadata() {
-
-    }
-
     @Transactional
     @Override
     public Set<CourseIngredient> findCourseIngredients(Course course) {

@@ -13,11 +13,6 @@ import java.util.List;
 public class HTableDao extends HDaoEntity<Table> implements TableDao {
     private static final String NUMBER_ATTRIBUTE_NAME = "number";
 
-    @Override
-    protected void initMetadata() {
-
-    }
-
     @Transactional
     @Override
     public Table addTable(Table table) {

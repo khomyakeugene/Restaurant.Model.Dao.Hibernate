@@ -14,11 +14,6 @@ public class HEmployeeDao extends HDaoEntity<Employee> implements EmployeeDao {
     private static final String FIRST_NAME_ATTRIBUTE_NAME = "firstName";
     private static final String SECOND_NAME_ATTRIBUTE_NAME = "secondName";
 
-    @Override
-    protected void initMetadata() {
-
-    }
-
     @Transactional
     @Override
     public Employee addEmployee(Employee employee) {
