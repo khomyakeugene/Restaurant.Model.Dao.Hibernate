@@ -54,6 +54,10 @@ public abstract class HDaoEntity<T> {
         return orderByAttributeName;
     }
 
+    protected boolean isUseCriteriaQuery() {
+        return useCriteriaQuery;
+    }
+
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
@@ -84,7 +88,7 @@ public abstract class HDaoEntity<T> {
     }
 
     protected T newObject() {
-        Class entityClass = getEntityClass();
+        Class<? extends T> entityClass = getEntityClass();
 
         T object;
         try {
@@ -141,15 +145,15 @@ public abstract class HDaoEntity<T> {
         return sessionFactory.getCurrentSession();
     }
 
-    private CriteriaBuilder getCriteriaBuilder() {
+    protected CriteriaBuilder getCriteriaBuilder() {
         return sessionFactory.getCriteriaBuilder();
     }
 
-    private CriteriaQuery<T> createCriteriaQuery() {
+    protected CriteriaQuery<T> createCriteriaQuery() {
         return getCriteriaBuilder().createQuery(getEntityClass());
     }
 
-    private List<T> getCriteriaQueryResultList(CriteriaQuery<T> criteriaQuery) {
+    protected List<T> getCriteriaQueryResultList(CriteriaQuery<T> criteriaQuery) {
         return getCurrentSession().createQuery(criteriaQuery).getResultList();
     }
 
@@ -166,7 +170,7 @@ public abstract class HDaoEntity<T> {
         return getOrderByCondition(getOrderByAttributeName());
     }
 
-    private EntityType<T> getEntityType() {
+    protected EntityType<T> getEntityType() {
         return sessionFactory.getMetamodel().entity(getEntityClass());
     }
 
@@ -178,7 +182,6 @@ public abstract class HDaoEntity<T> {
         // "non deprecated" method :( ; at least, don't understand how can use, for example,
         // sessionFactory.getMetamodel() approaching the same aim ...
         ClassMetadata classMetadata = sessionFactory.getClassMetadata(getEntityClass());
-        // ClassMetadata classMetadata = sessionFactory.getMetamodel().
         if (classMetadata instanceof AbstractEntityPersister) {  // And what I have to do if "not instnceof ..."?
             AbstractEntityPersister abstractEntityPersister = (AbstractEntityPersister) classMetadata;
             result = abstractEntityPersister.getTableName();
@@ -272,10 +275,8 @@ public abstract class HDaoEntity<T> {
     }
 
     private List<T> hqlFindAllObjects() {
-        Query<T> query = getCurrentSession().createQuery(SqlExpressions.fromExpression(
-                getEntityName(), getDefaultOrderByCondition()), getEntityClass());
-
-        return query.list();
+        return getCurrentSession().createQuery(SqlExpressions.fromExpression(
+                getEntityName(), getDefaultOrderByCondition()), getEntityClass()).list();
     }
 
     private List<T> criteriaFindAllObjects() {
@@ -292,7 +293,7 @@ public abstract class HDaoEntity<T> {
     }
 
     protected List<T> findAllObjects() {
-        return useCriteriaQuery ? criteriaFindAllObjects() : hqlFindAllObjects() ;
+        return useCriteriaQuery ? criteriaFindAllObjects() : hqlFindAllObjects();
     }
 
     private List<T> hqlFindObjectsByAttributeValue(String attributeName, Object value) {
@@ -328,7 +329,7 @@ public abstract class HDaoEntity<T> {
     }
 
 
-    protected Set<T> findObjectSetByAttributeValue(String attributeName, Object value) {
+    protected Set<T> findObjectSetByAttributeValue(String attributeName, com.company.restaurant.model.Course value) {
         HashSet<T> result = new HashSet<>();
         result.addAll(findObjectsByAttributeValue(attributeName, value));
 
@@ -336,7 +337,7 @@ public abstract class HDaoEntity<T> {
     }
 
 
-    protected T findObjectByAttributeValue(String attributeName, Object value) {
+    protected T findObjectByAttributeValue(String attributeName, Serializable value) {
         return getFirstFromList(findObjectsByAttributeValue(attributeName, value));
     }
 
@@ -348,10 +349,10 @@ public abstract class HDaoEntity<T> {
         return findObjectByAttributeValue(nameAttributeName, name);
     }
 
-    protected List<T> findObjectsByTwoAttributeValues(String attributeName1,
-                                                      Object value1,
-                                                      String attributeName2,
-                                                      Object value2) {
+    private List<T> hqlFindObjectsByTwoAttributeValues(String attributeName1,
+                                                       Object value1,
+                                                       String attributeName2,
+                                                       Object value2) {
         Query<T> query = getCurrentSession().createQuery(SqlExpressions.fromExpressionWithTwoFieldCondition(
                 getEntityName(), attributeName1, String.format(":%s", attributeName1), attributeName2,
                 String.format(":%s", attributeName2)), getEntityClass());
@@ -359,6 +360,28 @@ public abstract class HDaoEntity<T> {
         query.setParameter(attributeName2, value2);
 
         return query.list();
+    }
+
+    private List<T> criteriaFindObjectsByTwoAttributeValues(String attributeName1,
+                                                            Object value1,
+                                                            String attributeName2,
+                                                            Object value2) {
+        CriteriaBuilder criteriaBuilder = getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = createCriteriaQuery();
+        Root<T> rootEntity = criteriaQuery.from(getEntityType());
+        criteriaQuery.where(criteriaBuilder.and(criteriaBuilder.equal(rootEntity.get(attributeName1), value1),
+                criteriaBuilder.equal(rootEntity.get(attributeName2), value2)));
+
+        return getCriteriaQueryResultList(criteriaQuery);
+    }
+
+    protected List<T> findObjectsByTwoAttributeValues(String attributeName1,
+                                                      Object value1,
+                                                      String attributeName2,
+                                                      Object value2) {
+        return useCriteriaQuery ?
+                criteriaFindObjectsByTwoAttributeValues(attributeName1, value1, attributeName2, value2) :
+                hqlFindObjectsByTwoAttributeValues(attributeName1, value1, attributeName2, value2);
     }
 
     protected T findObjectByTwoAttributeValues(String attributeName1,
