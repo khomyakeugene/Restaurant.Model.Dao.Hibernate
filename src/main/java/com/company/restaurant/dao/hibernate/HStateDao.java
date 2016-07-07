@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by Yevhen on 26.06.2016.
  */
 public class HStateDao extends HDaoEntity<State> implements StateDao {
-    private static final String STATE_TYPE_ATTRIBUTE_NAME = "state_type";
+    private static final String STATE_TYPE_ATTRIBUTE_NAME = "stateType";
 
     @Transactional
     @Override
