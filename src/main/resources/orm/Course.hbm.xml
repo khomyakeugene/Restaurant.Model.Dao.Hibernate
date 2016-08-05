@@ -19,6 +19,9 @@
         <property name="cost">
             <column name="cost" sql-type="double precision" precision="-1"/>
         </property>
+        <property name="photo">
+            <column name="photo" sql-type="bytea"/>
+        </property>
         <many-to-one name="courseCategory" column="course_category_id"
                      class="com.company.restaurant.model.CourseCategory" lazy="false" not-null="true"/>
 
