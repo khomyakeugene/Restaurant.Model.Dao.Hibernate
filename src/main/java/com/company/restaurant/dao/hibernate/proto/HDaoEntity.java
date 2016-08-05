@@ -2,6 +2,7 @@ package com.company.restaurant.dao.hibernate.proto;
 
 import com.company.restaurant.dao.proto.SqlExpressions;
 import com.company.restaurant.model.proto.SimpleDic;
+import com.company.util.GenericHolder;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.TransientObjectException;
@@ -16,7 +17,6 @@ import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.SingularAttribute;
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.List;
@@ -26,11 +26,10 @@ import java.util.Set;
 /**
  * Created by Yevhen on 09.06.2016.
  */
-public abstract class HDaoEntity<T> {
+public abstract class HDaoEntity<T> extends GenericHolder<T> {
     private static final String SQL_ORDER_BY_CONDITION_PATTERN = "ORDER BY %s";
     private static final String NAME_ATTRIBUTE_NAME = "name";
 
-    private Class<T> entityClass;
     private SessionFactory sessionFactory;
     private boolean useCriteriaQuery;
 
@@ -46,7 +45,7 @@ public abstract class HDaoEntity<T> {
 
     }
 
-    public String getOrderByAttributeName() {
+    protected String getOrderByAttributeName() {
         if (orderByAttributeName == null) {
             orderByAttributeName = getEntityIdAttributeName();
         }
@@ -68,36 +67,6 @@ public abstract class HDaoEntity<T> {
 
     private T getFirstFromList(List<T> objects) {
         return (objects != null && objects.size() > 0) ? objects.get(0) : null;
-    }
-
-    private Class<T> getGenericClass() {
-        return ((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).
-                getActualTypeArguments()[0]);
-    }
-
-    private Class<T> getEntityClass() {
-        if (entityClass == null) {
-            entityClass = getGenericClass();
-        }
-
-        return entityClass;
-    }
-
-    public void setEntityClass(Class<T> entityClass) {
-        this.entityClass = entityClass;
-    }
-
-    protected T newObject() {
-        Class<? extends T> entityClass = getEntityClass();
-
-        T object;
-        try {
-            object = (T) Class.forName(entityClass.getName()).newInstance();
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        return object;
     }
 
     protected boolean isPersistent(T object) {
@@ -161,7 +130,7 @@ public abstract class HDaoEntity<T> {
         return getEntityClass().getName();
     }
 
-    protected String getOrderByCondition(String attributeName) {
+    private String getOrderByCondition(String attributeName) {
         return (attributeName == null || attributeName.isEmpty()) ? "" :
                 String.format(SQL_ORDER_BY_CONDITION_PATTERN, attributeName);
     }
@@ -233,7 +202,7 @@ public abstract class HDaoEntity<T> {
     protected T saveOrUpdate(T object) {
         Session session = getCurrentSession();
 
-        // It is important to call session .clear(): otherwise, the exception raises:
+        // It is important to call session.clear(): otherwise, the exception raises:
         // org.hibernate.NonUniqueObjectException: A different object with the same identifier value was already
         // associated with the session : [............
         session.clear();
@@ -245,7 +214,7 @@ public abstract class HDaoEntity<T> {
     protected T update(T object) {
         Session session = getCurrentSession();
 
-        // It is important to call session .clear(): otherwise, the exception raises:
+        // It is important to call session.clear(): otherwise, the exception raises:
         // org.hibernate.NonUniqueObjectException: A different object with the same identifier value was already
         // associated with the session : [............
         session.clear();
