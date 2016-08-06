@@ -22,6 +22,16 @@ public class HEmployeeDao extends HDaoEntity<Employee> implements EmployeeDao {
 
     @Transactional
     @Override
+    public void updEmployeePhoto(int employeeId, byte[] photo) {
+        Employee employee = findEmployeeById(employeeId);
+        if (employee != null) {
+            employee.setPhoto(photo);
+            saveOrUpdate(employee);
+        }
+    }
+
+    @Transactional
+    @Override
     public void delEmployee(Employee employee) {
         delete(employee);
     }
@@ -73,5 +83,18 @@ public class HEmployeeDao extends HDaoEntity<Employee> implements EmployeeDao {
     @Override
     public List<Employee> findAllEmployees() {
         return findAllObjects();
+    }
+
+    @Transactional
+    @Override
+    public byte[] getEmployeePhoto(int employeeId) {
+        byte[] result = null;
+
+        Employee employee = findEmployeeById(employeeId);
+        if (employee != null) {
+            result = employee.getPhoto();
+        }
+
+        return result;
     }
 }

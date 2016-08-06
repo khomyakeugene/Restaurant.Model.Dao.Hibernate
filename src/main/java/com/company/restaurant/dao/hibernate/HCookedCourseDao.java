@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by Yevhen on 14.06.2016.
  */
-public class HCookedCourseDao extends HDaoEntity<CookedCourse> implements CookedCourseDao {
+public class HCookedCourseDao extends HDaoEntity<CookedCourse> implements CookedCourseDao{
     private static final String COOK_DATETIME_ATTRIBUTE_NAME = "cookDatetime";
 
     @Transactional
